@@ -1,8 +1,4 @@
-require("dotenv").config();
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_SECRET_KEY;
-
-const twilio = require("twilio")(accountSid, authToken);
+const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 module.exports = {
   //this send otp message to the user

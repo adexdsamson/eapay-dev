@@ -1,7 +1,7 @@
 const monogoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv").config;
+require("dotenv").config();
 
 const twilio = require("../utils/twilio");
 

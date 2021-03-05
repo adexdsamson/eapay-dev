@@ -1,7 +1,7 @@
 //contains the user data as stored in the DB
 const monogoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-require("dotenv").config;
+require("dotenv").config();
 
 const SALT = 10;
 
