@@ -58,8 +58,8 @@ admin.get("/*", (req, res) => {
 // app.use(vhost(`api.${process.env.DOMAIN}`, api));
 
 //route usage
-require("./routes/userRoute")(api);
-require("./routes/merchantRoute")(api);
+require("./routes/userRoute")(app);
+require("./routes/merchantRoute")(app);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running at port: ${PORT}`));

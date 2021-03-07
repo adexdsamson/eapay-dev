@@ -52,6 +52,9 @@ module.exports = (api) => {
       }
     });
   });
+  api.get("/", (req,res) =>{
+    res.send("welcome");
+  })
 
   //accept user id as url  query params
   //this is the route that receive the otp verificationn from phone
