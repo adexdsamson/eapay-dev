@@ -1,5 +1,5 @@
-require('dotenv').config();
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const landingPage = express();
 const admin = express();
@@ -20,8 +20,6 @@ app.use(cors());
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
 });
 
 console.log(
@@ -50,12 +48,12 @@ admin.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "views/admin", "index.html"));
 });
 
-// // vhost usage
-// app.use(vhost(process.env.DOMAIN, landingPage));
-// app.use(vhost(`mobile.${process.env.DOMAIN}`, mobile));
-// app.use(vhost(`merchant.${process.env.DOMAIN}`, merchant));
-// app.use(vhost(`admin.eapay.${process.env.DOMAIN}`, admin));
-// app.use(vhost(`api.${process.env.DOMAIN}`, api));
+// vhost usage
+app.use(vhost(process.env.DOMAIN, landingPage));
+app.use(vhost(`mobile.${process.env.DOMAIN}`, mobile));
+app.use(vhost(`merchant.${process.env.DOMAIN}`, merchant));
+app.use(vhost(`admin.eapay.${process.env.DOMAIN}`, admin));
+app.use(vhost(`api.${process.env.DOMAIN}`, api));
 
 //route usage
 require("./routes/userRoute")(app);
