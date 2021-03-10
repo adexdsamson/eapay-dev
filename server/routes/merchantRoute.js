@@ -78,7 +78,7 @@ module.exports = (api) => {
   //$newDevice=device state of the user either true or false
   //it returns the updated verification, logn date and new device state of the user
   
-  app.post("/api/merchant/verify", async (req, res) => {
+  api.post("/api/merchant/verify", async (req, res) => {
     const code = req.body.code;
     if (
       utilsFunction.checkBody(code) ||
