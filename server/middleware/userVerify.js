@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-const Merchant = mongoose.model("merchants");
+const User = mongoose.model("users");
 
 module.exports = (req, res, next) => {
   let token = req.cookies.eapay;
-  Merchant.findToken(token, (err, user) => {
+  User.findToken(token, (err, user) => {
     if (err) throw err;
     if (!user) {
       //   req.cookies.prevUrl = req.url;
-      //   res.redirect("/api/merchant/login");
+      //   res.redirect("/api/user/login");
       return res.json({
         isAuth: false,
         error: true,
