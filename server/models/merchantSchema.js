@@ -21,13 +21,14 @@ const merchantSchema = monogoose.Schema({
   location: String,
   position: String,
   bank: Number,
-  accNumber: { type: Number, unique: 1 },
+  accNumber: { type: Number },
   document: String,
   docUpload: String,
   token: String,
   lastLogin: Number,
   device: [String],
-  newDevice: Boolean,
+  newDevice: { type: Boolean, default: 1 },
+  qrcodeUrl: String,
   qrcodeUrl: String,
   verified: { type: Boolean, default: 0 },
   lockUntil: { type: Number, default: 0 },
@@ -93,6 +94,8 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
       if (isMatch) {
         if (!merchant.loginAttempt || !merchant.lockUntil) {
           let newlogin = 7 * 24 * 60 * 60 * 1000; //after seven days
+          merchant.newDevice =
+            merchant.device.indexOf(device) === -1 ? true : false;
           let phone = merchant.phone
             ? merchant.phone.toString().length === 13
               ? merchant.phone.toString().replace("2", "+2")
@@ -100,7 +103,7 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
             : merchant.email;
           if (
             !merchant.verified ||
-            merchant.device != device ||
+            merchant.newDevice ||
             Date.now() > merchant.lastLogin + newlogin
           ) {
             //will verify with emial in case the user do not have a phone number

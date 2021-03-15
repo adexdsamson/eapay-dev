@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const request = require("request");
+const axios = require("axios");
 const userAgent = require("useragent");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
@@ -43,38 +43,33 @@ module.exports = (api) => {
       twilio.twilioVerify(phone);
       obj = { phone, password, device };
     }
-    Merchant.find({})
-      .limit(1)
-      .sort({ accNumber: -1 })
-      .select("accNumber")
-      .exec((err, data) => {
-        if (err) return res.json(err);
-        let accNumber = data[0].accNumber + 1;
-        const merchant = new Merchant(obj, accNumber);
-        merchant.save((err, merchants) => {
-          if (err) return res.json(err);
-          res.status(200).json({
-            success: true,
-            merchant: {
-              name: merchants.fullname,
-              email: merchants.email,
-              phone: merchants.phone,
-              newDevice: merchants.newDevice,
-              token: merchants.token,
-              _id: merchants._id,
-              verified: merchants.verified,
-              lockUntil: merchants.lockUntil,
-              loginAttempt: merchants.loginAttempt,
-            },
-          });
-        });
+    const merchant = new Merchant(obj);
+    merchant.save((err, merchants) => {
+      if (err) return res.json(err);
+      res.status(200).json({
+        success: true,
+        merchant: {
+          name: merchants.fullname,
+          email: merchants.email,
+          phone: merchants.phone,
+          newDevice: merchants.newDevice,
+          token: merchants.token,
+          _id: merchants._id,
+          verified: merchants.verified,
+          lockUntil: merchants.lockUntil,
+          loginAttempt: merchants.loginAttempt,
+        },
       });
+    });
   });
 
   //accept merchant id as url  query params
   //this is the route that receive the otp verificationn from phone
-  ///api/merchant/verify?id=${id} url format
+  ///api/merchant/verify?id=${id}&verify=${newDevice} url format
+  //$id=object id of the user and
+  //$newDevice=device state of the user either true or false
   //it returns the updated verification, logn date and new device state of the user
+
   api.post("/api/merchant/verify", async (req, res) => {
     let agent = userAgent.parse(req.headers["user-agent"]);
     let device = agent.toString();
@@ -82,7 +77,8 @@ module.exports = (api) => {
     if (
       utilsFunction.checkBody(code) ||
       utilsFunction.checkBody(req.body.phone) ||
-      utilsFunction.checkBody(req.query.id)
+      utilsFunction.checkBody(req.query.id) ||
+      utilsFunction.checkBody(req.query.verify)
     )
       return res.json("Invalid Parameter");
     const phone =
@@ -97,18 +93,32 @@ module.exports = (api) => {
       return res.json(e);
     }
     if (verificationResult.status === "approved") {
-      Merchant.findByIdAndUpdate(
-        { _id: id },
-        {
-          $set: { verified: 1, lastLogin: Date.now() },
-          $push: { device: device },
-        },
-        { new: true },
-        (err) => {
-          if (err) return res.json(err);
-          return res.status(200).json({ success: true });
-        }
-      );
+      if (req.query.verify) {
+        Merchant.findByIdAndUpdate(
+          { _id: id },
+          {
+            $set: { verified: 1, lastLogin: Date.now() },
+          },
+          { new: true },
+          (err) => {
+            if (err) return res.json(err);
+            return res.status(200).json({ success: true });
+          }
+        );
+      } else {
+        Merchant.findByIdAndUpdate(
+          { _id: id },
+          {
+            $set: { verified: 1, lastLogin: Date.now() },
+            $push: { device: device },
+          },
+          { new: true },
+          (err) => {
+            if (err) return res.json(err);
+            return res.status(200).json({ success: true });
+          }
+        );
+      }
     }
   });
 
@@ -179,6 +189,8 @@ module.exports = (api) => {
     updateMerchant,
     formidable(),
     (req, res) => {
+      if (utilsFunction.checkFile(req.files.file))
+        return res.json("Upload a valid document");
       cloudinary.uploader.upload(req.files.file.path, (err, result) => {
         if (err) return res.json(err);
         Merchant.findByIdAndUpdate(
@@ -211,16 +223,16 @@ module.exports = (api) => {
         utilsFunction.checkBody(bank)
       )
         return res.json("Invalid Parameter");
-      let options = {
-        method: "GET",
-        url: `https://api.paystack.co/bank/resolve?account_number=${accNumber}&bank_code=${bank}`,
-        headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
-        },
-      };
-      request(options, (err, response) => {
-        const resp = JSON.parse(response.body);
-        if (resp.status) {
+      axios
+        .get(
+          `https://api.paystack.co/bank/resolve?account_number=${accNumber}&bank_code=${bank}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+            },
+          }
+        )
+        .then((resp) => {
           const qrImg = [{ body }];
           QRCode.toDataURL(qrImg, function (err, url) {
             //access the qrcode with <img src=qrcodeurl />
@@ -247,10 +259,10 @@ module.exports = (api) => {
               }
             );
           });
-        } else {
-          return res.json(resp.message);
-        }
-      });
+        })
+        .catch((e) => {
+          res.json(e.response.data.message);
+        });
     }
   );
 
@@ -263,7 +275,7 @@ module.exports = (api) => {
       Merchant.findByIdAndUpdate(
         { _id: req.user._id },
         { token: "" },
-        (err, merchant) => {
+        (err) => {
           if (err) return res.json(err);
           return res.status(200).json({ success: true });
         }
