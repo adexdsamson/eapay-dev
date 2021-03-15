@@ -7,13 +7,14 @@ const api = express();
 const mobile = express();
 const merchant = express();
 const cors = require("cors");
-const path = require("path")
+const path = require("path");
 const vhost = require("vhost");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
 require("./models/userSchema.js");
 require("./models/merchantSchema.js");
+require("./models/productsSchema.js");
 
 app.use(cors());
 
@@ -26,7 +27,7 @@ console.log(
   `${mongoose.connection.readyState}-connected to database sucessfully with value of 2`
 );
 
-app.use(express.json())
+app.use(express.json());
 app.use(cookieParser());
 
 landingPage.use(express.static(path.join(__dirname, "views/index")));
@@ -58,6 +59,7 @@ app.use(vhost(`api.${process.env.DOMAIN}`, app));
 //route usage
 require("./routes/userRoute")(app);
 require("./routes/merchantRoute")(app);
+require('./routes/merchantProduct')(app)
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running at port: ${PORT}`));

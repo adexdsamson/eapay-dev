@@ -14,11 +14,14 @@ module.exports = (req, res, next) => {
       : user.email;
     if (
       !user.verified ||
-      user.newDevice ||
-      Date.now() > user.lastLogin + newlogin
+      user.newDevice 
+     // Date.now() > user.lastLogin + newlogin
     ) {
       // twilio.twilioVerify(phone);
-      return res.json({ error: true, verify: "Please Verify your account" });
+      return res.json({
+        isverify: false,
+        verify: "Please Verify your account, Redirect to verify",
+      });
     }
     next();
   });

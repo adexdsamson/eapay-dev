@@ -21,7 +21,7 @@ const merchantSchema = monogoose.Schema({
   location: String,
   position: String,
   bank: Number,
-  accNumber: { type: Number, unique: 1 },
+  accNumber: { type: Number },
   document: String,
   docUpload: String,
   token: String,

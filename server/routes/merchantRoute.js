@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const request = require("request");
+const axios = require("axios");
 const userAgent = require("useragent");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
@@ -43,32 +43,24 @@ module.exports = (app) => {
       twilio.twilioVerify(phone);
       obj = { phone, password, device };
     }
-    Merchant.find({})
-      .limit(1)
-      .sort({ accNumber: -1 })
-      .select("accNumber")
-      .exec((err, data) => {
-        if (err) return res.json(err);
-        let accNumber = data[0].accNumber + 1;
-        const merchant = new Merchant(obj, accNumber);
-        merchant.save((err, merchants) => {
-          if (err) return res.json(err);
-          res.status(200).json({
-            success: true,
-            merchant: {
-              name: merchants.fullname,
-              email: merchants.email,
-              phone: merchants.phone,
-              newDevice: merchants.newDevice,
-              token: merchants.token,
-              _id: merchants._id,
-              verified: merchants.verified,
-              lockUntil: merchants.lockUntil,
-              loginAttempt: merchants.loginAttempt,
-            },
-          });
-        });
+    const merchant = new Merchant(obj);
+    merchant.save((err, merchants) => {
+      if (err) return res.json(err);
+      res.status(200).json({
+        success: true,
+        merchant: {
+          name: merchants.fullname,
+          email: merchants.email,
+          phone: merchants.phone,
+          newDevice: merchants.newDevice,
+          token: merchants.token,
+          _id: merchants._id,
+          verified: merchants.verified,
+          lockUntil: merchants.lockUntil,
+          loginAttempt: merchants.loginAttempt,
+        },
       });
+    });
   });
 
   //accept merchant id as url  query params
@@ -194,6 +186,8 @@ module.exports = (app) => {
     updateMerchant,
     formidable(),
     (req, res) => {
+      if (utilsFunction.checkFile(req.files.file))
+        return res.json("Upload a valid document");
       cloudinary.uploader.upload(req.files.file.path, (err, result) => {
         if (err) return res.json(err);
         Merchant.findByIdAndUpdate(
@@ -226,16 +220,16 @@ module.exports = (app) => {
         utilsFunction.checkBody(bank)
       )
         return res.json("Invalid Parameter");
-      let options = {
-        method: "GET",
-        url: `https://api.paystack.co/bank/resolve?account_number=${accNumber}&bank_code=${bank}`,
-        headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
-        },
-      };
-      request(options, (err, response) => {
-        const resp = JSON.parse(response.body);
-        if (resp.status) {
+      axios
+        .get(
+          `https://api.paystack.co/bank/resolve?account_number=${accNumber}&bank_code=${bank}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+            },
+          }
+        )
+        .then((resp) => {
           const qrImg = [{ body }];
           QRCode.toDataURL(qrImg, function (err, url) {
             //access the qrcode with <img src=qrcodeurl />
@@ -262,27 +256,22 @@ module.exports = (app) => {
               }
             );
           });
-        } else {
-          return res.json(resp.message);
-        }
-      });
+        })
+        .catch((e) => {
+          res.json(e.response.data.message);
+        });
     }
   );
 
   //on success log the user outand reset token
-  app.get(
-    "/api/merchant/logout",
-    merchantVerify,
-    updateMerchant,
-    (req, res) => {
-      Merchant.findByIdAndUpdate(
-        { _id: req.user._id },
-        { token: "" },
-        (err, merchant) => {
-          if (err) return res.json(err);
-          return res.status(200).json({ success: true });
-        }
-      );
-    }
-  );
+  app.get("/api/merchant/logout", merchantVerify, (req, res) => {
+    Merchant.findByIdAndUpdate(
+      { _id: req.user._id },
+      { token: "" },
+      (err, merchant) => {
+        if (err) return res.json(err);
+        return res.status(200).json({ success: true });
+      }
+    );
+  });
 };
