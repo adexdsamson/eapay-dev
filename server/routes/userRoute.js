@@ -3,15 +3,20 @@ require("dotenv").config();
 const axios = require("axios");
 const mongoose = require("mongoose");
 const SHA1 = require("crypto-js/sha1");
+const userAgent = require("useragent");
 
 const twilio = require("../utils/twilio");
+const emailCheck = require("../utils/checkEmail");
 const utilsFunction = require("../utils/utilsFunction");
+
+const userVerify = require("../middleware/userVerify");
+const updateUser = require("../middleware/updateUser");
 
 const User = mongoose.model("users");
 
-module.exports = (app) => {
+module.exports = (api) => {
   //register route which accept bvn, email,date of birth and password
-  app.post("/api/user/register", (req, res) => {
+  api.post("/api/user/register", (req, res) => {
     let { bvn, email, dob, password } = req.body;
     //the formtted date of birth shoulf be in YYYY-MM-DD
     if (
@@ -75,13 +80,12 @@ module.exports = (app) => {
   //accept user id as url  query params
   //this is the route that receive the otp verificationn from phone
   ///api/verify?id=${id} url format
-  app.post("/api/user/verify", async (req, res) => {
+  api.post("/api/user/verify", async (req, res) => {
     if (
       utilsFunction.checkBody(req.body.code) ||
       utilsFunction.checkBody(req.body.phone)
     )
       return res.json("Invalid Parameter");
-
     const code = req.body.code;
     const phone =
       req.body.phone.length === 11
@@ -108,4 +112,78 @@ module.exports = (app) => {
       );
     }
   });
+
+  api.post("/api/user/login", (req, res) => {
+    const { email, password } = req.body;
+    if (utilsFunction.checkBody(email) || utilsFunction.checkBody(password))
+      return res.json("Invalid Parameter");
+    const isEmail = emailCheck(email);
+    let obj = {};
+    if (isEmail) {
+      obj = { email };
+    } else {
+      const phone = email.length === 11 ? email.replace("0", "+234") : email;
+      obj = { phone };
+    }
+    let agent = userAgent.parse(req.headers["user-agent"]);
+    let device = agent.toString();
+    User.loginUser(obj, password, device, (err, users, type) => {
+      if (err) return res.json(err);
+      if (users) {
+        users.getToken((err, users) => {
+          if (err) return res.json(err);
+          return res
+            .cookie("eapay", users.token)
+            .status(200)
+            .json({
+              success: true,
+              users: {
+                name: users.fullname,
+                email: users.email,
+                phone: users.phone,
+                newDevice: users.newDevice,
+                token: users.token,
+                _id: users._id,
+                verified: users.verified,
+                lockUntil: users.lockUntil,
+                loginAttempt: users.loginAttempt,
+              },
+            });
+        });
+      }
+      let reason = User.failedLogin;
+      switch (type) {
+        case reason.NOT_FOUND:
+        case reason.PASSWORD_INCORRECT:
+          return res.json("Email or Password incorrect");
+        case reason.MAX_ATTEMPTS:
+          //Email notification on account
+          return res.json("Check Email  for account notification");
+      }
+    });
+  });
+
+  //this check the authentication and verification state of the merchant
+  api.get("/api/user/auth", userVerify, updateUser, (req, res) => {
+    res.status(200).json({ success: true, isUser: true });
+  });
+
+  //on success log the user outand reset token
+  api.get(
+    "/api/user/logout",
+    userVerify,
+    updateUser,
+    (req, res) => {
+      User.findByIdAndUpdate(
+        { _id: req.user._id },
+        { token: "" },
+        (err, user) => {
+          if (err) return res.json(err);
+          return res.status(200).json({ success: true });
+        }
+      );
+    }
+  )
+
 };
+
