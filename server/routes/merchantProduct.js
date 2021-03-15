@@ -17,8 +17,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-module.exports = (app) => {
-  app.post(
+module.exports = (api) => {
+  api.post(
     "/api/merchant/product/create",
     merchantVerify,
     updateMerchant,
@@ -61,7 +61,7 @@ module.exports = (app) => {
   );
 
   //returns all product by a merchant
-  app.get(
+  api.get(
     "/api/merchant/product/products",
     merchantVerify,
     updateMerchant,
@@ -75,7 +75,7 @@ module.exports = (app) => {
 
   //single product view
   // /api/merchant/product?productId={productId}
-  app.get(
+  api.get(
     "/api/merchant/product",
     merchantVerify,
     updateMerchant,
@@ -93,7 +93,7 @@ module.exports = (app) => {
 
   //update Product
   // /api/merchant/product/update?productId={productId}
-  app.post(
+  api.post(
     "/api/merchant/product/update",
     merchantVerify,
     updateMerchant,
@@ -124,7 +124,7 @@ module.exports = (app) => {
   );
   //single product view by everyone
   // /api/product?productId={productId}
-  app.get("/api/product", (req, res) => {
+  api.get("/api/product", (req, res) => {
     const { productId } = req.query;
     const url = req.originalUrl;
     Products.findOne({ _id: productId }).exec((err, product) => {
