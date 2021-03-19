@@ -42,32 +42,37 @@ module.exports = (api) => {
           try {
             twilio.twilioVerify(phone);
             data.save((err, user) => {
-              if (err) return res.status(401).send("Cant save user");
+              if (err)
+                return res
+                  .status(401)
+                  .json({ message: "Cant save user", payload: {} });
               //user data has been successfully stored in db, the user should be expecting OTP
               res.status(200).json({
-                user: {
-                  name: user.fullname,
-                  email: user.email,
-                  phone: user.phone,
-                  _id: user._id,
-                  newDevice: user.newDevice,
-                  token: user.token,
-                  verified: user.verified,
-                  lockUntil: user.lockUntil,
-                  loginAttempt: user.loginAttempt,
+                payload: {
+                  user: {
+                    name: user.fullname,
+                    email: user.email,
+                    phone: user.phone,
+                    _id: user._id,
+                    newDevice: user.newDevice,
+                    token: user.token,
+                    verified: user.verified,
+                    lockUntil: user.lockUntil,
+                    loginAttempt: user.loginAttempt,
+                  },
                 },
                 success: true,
               });
             });
           } catch (error) {
-            return res.json("Error sending sms");
+            return res.json({ message: "Error sending sms", payload: {} });
           }
         } else {
           //DOB did not match
-          return res.json("Information Miss match");
+          return res.json({ message: "Information Miss match", payload: {} });
         }
       } else {
-        return res.json("Invalid BVN");
+        return res.json({ message: "Invalid BVN", payload: {} });
       }
     });
   });
@@ -125,16 +130,18 @@ module.exports = (api) => {
             .status(200)
             .json({
               success: true,
-              users: {
-                name: users.fullname,
-                email: users.email,
-                phone: users.phone,
-                newDevice: users.newDevice,
-                token: users.token,
-                _id: users._id,
-                verified: users.verified,
-                lockUntil: users.lockUntil,
-                loginAttempt: users.loginAttempt,
+              payload: {
+                users: {
+                  name: users.fullname,
+                  email: users.email,
+                  phone: users.phone,
+                  newDevice: users.newDevice,
+                  token: users.token,
+                  _id: users._id,
+                  verified: users.verified,
+                  lockUntil: users.lockUntil,
+                  loginAttempt: users.loginAttempt,
+                },
               },
             });
         });
@@ -143,10 +150,10 @@ module.exports = (api) => {
       switch (type) {
         case reason.NOT_FOUND:
         case reason.PASSWORD_INCORRECT:
-          return res.json("Email or Password incorrect");
+          return res.json({ message: "Email or Password incorrect", payload: {} });
         case reason.MAX_ATTEMPTS:
           //Email notification on account
-          return res.json("Check Email  for account notification");
+          return res.json({ message: "Check Email for account notification", payload: {} });
       }
     });
   });
@@ -157,21 +164,14 @@ module.exports = (api) => {
   });
 
   //on success log the user outand reset token
-  api.get(
-    "/api/user/logout",
-    userVerify,
-    updateUser,
-    (req, res) => {
-      User.findByIdAndUpdate(
-        { _id: req.user._id },
-        { token: "" },
-        (err, user) => {
-          if (err) return res.json(err);
-          return res.status(200).json({ success: true });
-        }
-      );
-    }
-  )
-
+  api.get("/api/user/logout", userVerify, updateUser, (req, res) => {
+    User.findByIdAndUpdate(
+      { _id: req.user._id },
+      { token: "" },
+      (err, user) => {
+        if (err) return res.json(err);
+        return res.status(200).json({ success: true });
+      }
+    );
+  });
 };
-

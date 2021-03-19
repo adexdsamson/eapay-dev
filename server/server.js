@@ -26,7 +26,8 @@ console.log(
   `${mongoose.connection.readyState}-connected to database sucessfully with value of 2`
 );
 
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 landingPage.use(express.static(path.join(__dirname, "views/index")));
@@ -56,8 +57,8 @@ app.use(vhost(`admin.eapay.${process.env.DOMAIN}`, admin));
 app.use(vhost(`api.${process.env.DOMAIN}`, api));
 
 //route usage
-require("./routes/userRoute")(app);
-require("./routes/merchantRoute")(app);
+require("./routes/userRoute")(api);
+require("./routes/merchantRoute")(api);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running at port: ${PORT}`));

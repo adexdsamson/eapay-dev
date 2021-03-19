@@ -30,7 +30,7 @@ module.exports = (api) => {
   api.post("/api/merchant/register", (req, res) => {
     const { email, password } = req.body;
     if (utilsFunction.checkBody(email) || utilsFunction.checkBody(password))
-      return res.json("Invalid Parameter");
+      return res.json({ message: "Invalid Parameter", payload: {} });
     let agent = userAgent.parse(req.headers["user-agent"]);
     let device = [];
     device.push(agent.toString());
@@ -55,16 +55,18 @@ module.exports = (api) => {
           if (err) return res.json(err);
           res.status(200).json({
             success: true,
-            merchant: {
-              name: merchants.fullname,
-              email: merchants.email,
-              phone: merchants.phone,
-              newDevice: merchants.newDevice,
-              token: merchants.token,
-              _id: merchants._id,
-              verified: merchants.verified,
-              lockUntil: merchants.lockUntil,
-              loginAttempt: merchants.loginAttempt,
+            payload: {
+              merchant: {
+                name: merchants.fullname,
+                email: merchants.email,
+                phone: merchants.phone,
+                newDevice: merchants.newDevice,
+                token: merchants.token,
+                _id: merchants._id,
+                verified: merchants.verified,
+                lockUntil: merchants.lockUntil,
+                loginAttempt: merchants.loginAttempt,
+              },
             },
           });
         });
@@ -84,7 +86,7 @@ module.exports = (api) => {
       utilsFunction.checkBody(req.body.phone) ||
       utilsFunction.checkBody(req.query.id)
     )
-      return res.json("Invalid Parameter");
+      return res.json({ message: "Invalid Parameter", payload: {} });
     const phone =
       req.body.phone.length === 11
         ? req.body.phone.replace("0", "+234")
@@ -118,7 +120,7 @@ module.exports = (api) => {
   api.post("/api/merchant/login", (req, res) => {
     const { email, password } = req.body;
     if (utilsFunction.checkBody(email) || utilsFunction.checkBody(password))
-      return res.json("Invalid Parameter");
+      return res.json({ message: "Invalid Parameter", payload: {} });
     const isEmail = emailCheck(email);
     let obj = {};
     if (isEmail) {
@@ -139,16 +141,18 @@ module.exports = (api) => {
             .status(200)
             .json({
               success: true,
-              merchant: {
-                name: merchants.fullname,
-                email: merchants.email,
-                phone: merchants.phone,
-                newDevice: merchants.newDevice,
-                token: merchants.token,
-                _id: merchants._id,
-                verified: merchants.verified,
-                lockUntil: merchants.lockUntil,
-                loginAttempt: merchants.loginAttempt,
+              payload: {
+                merchant: {
+                  name: merchants.fullname,
+                  email: merchants.email,
+                  phone: merchants.phone,
+                  newDevice: merchants.newDevice,
+                  token: merchants.token,
+                  _id: merchants._id,
+                  verified: merchants.verified,
+                  lockUntil: merchants.lockUntil,
+                  loginAttempt: merchants.loginAttempt,
+                },
               },
             });
         });
@@ -157,10 +161,16 @@ module.exports = (api) => {
       switch (type) {
         case reason.NOT_FOUND:
         case reason.PASSWORD_INCORRECT:
-          return res.json("Email or Password incorrect");
+          return res.json({
+            message: "Email or Password incorrect",
+            payload: {},
+          });
         case reason.MAX_ATTEMPTS:
           //Email notification on account
-          return res.json("Check Email  for account notification");
+          return res.json({
+            message: "Check Email for account notification",
+            payload: {},
+          });
       }
     });
   });
@@ -232,6 +242,7 @@ module.exports = (api) => {
                 if (err) return res.json(err);
                 return res.status(200).json({
                   success: true,
+                  payload: {
                   merchant: {
                     name: merchants.fullname,
                     email: merchants.email,
@@ -242,13 +253,13 @@ module.exports = (api) => {
                     verified: merchants.verified,
                     lockUntil: merchants.lockUntil,
                     loginAttempt: merchants.loginAttempt,
-                  },
+                  }},
                 });
               }
             );
           });
         } else {
-          return res.json(resp.message);
+          return res.json({message: resp.message});
         }
       });
     }
