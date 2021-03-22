@@ -12,7 +12,7 @@ const Store = ({ title, body, src, alt, data }) => {
         <Row className="h-100 align-items-center">
           <Col lg={6} md={6} sm={12}>
             <Fade right>
-              <h3 className="feature-title mb-4">{title}</h3>
+              <h2 className="feature-title mb-4">{title}</h2>
               <p className="feature-paragraph mb-4"> {body} </p>
               <div className="mb-4 ml-3">
                 {data.map((item) => (
@@ -56,7 +56,7 @@ const Store = ({ title, body, src, alt, data }) => {
           </Col>
           <Col lg={6} md={6} sm={12}>
             <Fade right>
-              <h3 className="feature-title mb-4">{title}</h3>
+              <h2 className="feature-title mb-4">{title}</h2>
               <p className="feature-paragraph mb-4"> {body} </p>
               <div className="mb-4 ml-3">
                 {data.map((item) => (

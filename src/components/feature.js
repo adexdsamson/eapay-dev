@@ -8,7 +8,7 @@ const Feature = ({ src, alt, reverse, title, body }) => {
     <>
       <Col className="" md={6}>
         <Fade left>
-          <h3 className="feature-title mb-3">{title}</h3>
+          <h2 className="feature-title mb-3">{title}</h2>
           <p className="feature-paragraph mb-4"> {body} </p>
           <Badge label="coming soon" />
         </Fade>
@@ -43,7 +43,7 @@ const Feature = ({ src, alt, reverse, title, body }) => {
           </Col>
           <Col md={6}>
             <Fade right>
-              <h3 className="feature-title mb-3">{title}</h3>
+              <h2 className="feature-title mb-3">{title}</h2>
               <p className="feature-paragraph mb-4"> {body} </p>
               <Badge label="coming soon" />
             </Fade>

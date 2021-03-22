@@ -23,7 +23,7 @@ const IndexPage = ({ inputValue, onChange }) => {
               <div className="mb-3">
                 <Badge label="Coming soon" />
               </div>
-              <h2 className="header-title">More in one payment platform</h2>
+              <h1 className="header-title">More in one payment platform</h1>
               <p className="header-paragraph">
                 Help vendors and customers experience seamless transactions; get
                 payment in more ways, easy delivery and tax audit.

@@ -8,7 +8,7 @@ const ConnectWithUs = ({ title, body, src, alt, inputValue, onChange }) => {
       <Row className="align-items-center">
         <Col lg={6} md={6} sm={12}>
           <Fade left>
-            <h4 className="connect-title text-white">{title}</h4>
+            <h2 className="connect-title text-white">{title}</h2>
             <p className="connect-paragraph text-second-white "> {body} </p>
           </Fade>
         </Col>
