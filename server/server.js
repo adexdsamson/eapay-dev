@@ -28,6 +28,7 @@ console.log(
 
 app.use(express.json())
 app.use(cookieParser());
+app.use('/storage',express.static(path.join(__dirname, "views/admin")))
 
 landingPage.use(express.static(path.join(__dirname, "views/index/build")));
 mobile.use(express.static(path.join(__dirname, "views/mobile")));
