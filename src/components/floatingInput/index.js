@@ -9,7 +9,8 @@ const FloatingInput = ({
   className,
   inputClassName,
   inputContainerClassName,
-  meta,
+  value,
+  onChange
 }) => {
   const classes = useStyles();
   return (
@@ -22,10 +23,11 @@ const FloatingInput = ({
           className={`${classes.input}  ${inputClassName}`}
           id={name}
           placeholder={placeholder}
+          onChange={onChange}
         />
         <label
           htmlFor={name}
-          className={`${classes.label} ${meta?.visited && input?.value ? classes.active : ""}`}
+          className={`${classes.label} ${value ? classes.active : ""}`}
         >
           {label}
         </label>

@@ -22,12 +22,12 @@ const data = [
   },
 ];
 
-const IndexPage = () => {
+const IndexPage = ({ inputValue, onChange }) => {
   return (
     <>
       <div className="header-container">
         <Container>
-          <Header />
+          <Header inputValue={inputValue} onChange={onChange} />
         </Container>
       </div>
       <Container>
@@ -56,6 +56,8 @@ const IndexPage = () => {
           <ConnectWIthUs
             title="Connect with us for more information"
             body="We want to make business transaction easy for both vendors and customers"
+            inputValue={inputValue}
+            onChange={onChange}
           />
         </Container>
       </div>

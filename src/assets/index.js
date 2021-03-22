@@ -1,5 +1,4 @@
 import Logo from "./logo.png";
-import Ecommerce from "./ecommcre.png";
 import Store from "./store.png";
 import Tax from "./tax.png";
 import Tips from "./tips.png";
@@ -22,7 +21,6 @@ import StoreLap from './store-lap.png'
 
 export {
   Logo,
-  Ecommerce,
   Store,
   Tax,
   Tips,

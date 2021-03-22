@@ -2,9 +2,19 @@ import React, { Component } from "react";
 import View from "../../presentation/Index";
 
 class IndexPage extends Component {
-  state = {};
+  state = {
+    value: ''
+  };
+
+  handleInput = event => {
+    this.setState({ value: event.target.value })
+  }
+
+  handleSubmit = () => {}
+
   render() {
-    return <View />;
+    let { state: { value }, handleInput } = this
+    return <View inputValue={value} onChange={handleInput} />;
   }
 }
 

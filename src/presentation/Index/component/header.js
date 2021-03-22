@@ -12,7 +12,7 @@ import Badge from "../../../components/comingSoon";
 import Input from "../../../components/floatingInput";
 import { Fade, Zoom } from "react-reveal";
 
-const IndexPage = () => {
+const IndexPage = ({ inputValue, onChange }) => {
   return (
     <header className="pt-3">
       <Navbar />
@@ -33,6 +33,8 @@ const IndexPage = () => {
                 name="email"
                 type="email"
                 inputContainerClassName="header-input mb-3 "
+                value={inputValue}
+                onChange={onChange}
               />
               <Button
                 className="rounded text-capitalize"
