@@ -85,7 +85,6 @@ section {
 .circle4 {
   position: absolute;
   width: 125px;
-  height: 123px;
   left: 179px;
   top: 188px;
   animation: Circle4 2s linear;
@@ -93,7 +92,6 @@ section {
 .circle5 {
   position: absolute;
   width: 101px;
-  height: 99px;
   left: 0px;
   top: 48px;
   animation: Circle5 2s linear;
@@ -101,7 +99,6 @@ section {
 .circle6 {
   position: absolute;
   width: 55px;
-  height: 54px;
   left: 200px;
   top: 72px;
   animation: Circle6 2s linear;
@@ -110,7 +107,6 @@ section {
 .black-circle {
   position: absolute;
   width: 503px;
-  height: 478px;
   left: 0px;
   top: -286px;
 }
@@ -118,7 +114,6 @@ section {
 .image-circle {
   position: absolute;
   width: 503px;
-  height: 478px;
   left: 61px;
   top: -163px;
 }
@@ -182,7 +177,6 @@ section {
 .black-circle-reverse {
   position: absolute;
   width: 519px;
-  height: 510px;
   left: 81px;
   top: -319px;
 }
@@ -190,7 +184,6 @@ section {
 .image-circle-reverse {
   position: absolute;
   width: 576px;
-  height: 510px;
   left: -28px;
   top: -180px;
 }
@@ -203,14 +196,12 @@ section {
 .store-black-circle {
   position: absolute;
   width: 395px;
-  height: 390px;
   left: 60px;
   top: -41px;
 }
 .store-image {
   position: absolute;
   width: 487px;
-  height: 292px;
   left: 122px;
   top: 303px;
 }
@@ -243,7 +234,6 @@ section {
   .black-circle-reverse {
     position: absolute;
     width: 214px;
-    height: 510px;
     left: 45px;
     top: -300px;
   }
@@ -255,14 +245,12 @@ section {
   .image-circle-reverse {
     position: absolute;
     width: 214px;
-    height: 510px;
     left: 22px;
     top: -248px;
   }
   .store-black-circle {
     position: absolute;
     width: 215px;
-    height: 390px;
     left: 33px;
     top: -27px;
   }
@@ -491,7 +479,6 @@ section {
   .image-circle-reverse {
     position: absolute;
     width: 320px;
-    height: 510px;
     left: 27px;
     top: -248px;
   }
