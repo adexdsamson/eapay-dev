@@ -29,7 +29,7 @@ console.log(
 app.use(express.json())
 app.use(cookieParser());
 
-landingPage.use(express.static(path.join(__dirname, "views/index")));
+landingPage.use(express.static(path.join(__dirname, "views/index/build")));
 mobile.use(express.static(path.join(__dirname, "views/mobile")));
 merchant.use(express.static(path.join(__dirname, "views/merchant")));
 admin.use(express.static(path.join(__dirname, "views/admin")));
