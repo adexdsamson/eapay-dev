@@ -4,7 +4,7 @@ import { Fade } from "react-reveal";
 
 const ConnectWithUs = ({ title, body, src, alt, inputValue, onChange }) => {
   return (
-    <section id='section' className="">
+    <div id='section' className="">
       <Row className="align-items-center">
         <Col lg={6} md={6} sm={12}>
           <Fade left>
@@ -24,7 +24,7 @@ const ConnectWithUs = ({ title, body, src, alt, inputValue, onChange }) => {
           </Fade>
         </Col>
       </Row>
-    </section>
+    </div>
   );
 };
 

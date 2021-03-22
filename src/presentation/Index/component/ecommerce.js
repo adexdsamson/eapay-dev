@@ -8,7 +8,7 @@ const Ecommerce = ({ title, body, src, alt }) => {
         title="Eapay Commerce"
         body="Display your products to more customers and improve sales with our customized E-commerce store."
         src={img}
-        alt
+        alt="Laptop showing eapay's dashboard"
         reverse
       />
     </section>

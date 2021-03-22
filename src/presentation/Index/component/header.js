@@ -55,13 +55,13 @@ const IndexPage = ({ inputValue, onChange }) => {
               data-aos-duration="3000"
               className="img-fluid circle1"
               src={circle1}
-              alt="women"
+              alt="woman thinking"
             />
-            <img className="img-fluid circle2" src={circle2} alt="women" />
-            <img className="img-fluid circle3" src={circle3} alt="women" />
-            <img className="img-fluid circle6" src={circle6} alt="women" />
-            <img className="img-fluid circle4" src={circle4} alt="women" />
-            <img className="img-fluid circle5" src={circle5} alt="women" />
+            <img className="img-fluid circle2" src={circle2} alt="woman with bag" />
+            <img className="img-fluid circle3" src={circle3} alt="black dot" />
+            <img className="img-fluid circle6" src={circle6} alt="small black dot" />
+            <img className="img-fluid circle4" src={circle4} alt="small white dot" />
+            <img className="img-fluid circle5" src={circle5} alt="large white dot" />
           </Zoom>
         </Col>
       </Row>

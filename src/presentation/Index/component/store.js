@@ -7,7 +7,7 @@ import { useMediaQueries } from "../../../HOC/useMediaQuery";
 const Store = ({ title, body, src, alt, data }) => {
   const isMobile = useMediaQueries(0, 960);
   return (
-    <section>
+    <div>
       {isMobile ? (
         <Row className="h-100 align-items-center">
           <Col lg={6} md={6} sm={12}>
@@ -61,7 +61,7 @@ const Store = ({ title, body, src, alt, data }) => {
               <div className="mb-4 ml-3">
                 {data.map((item) => (
                   <div className="d-flex align-items-center">
-                    <img className="img-fluid" src={Dot} alt="" />
+                    <img className="img-fluid" src={Dot} alt="dot" />
                     <div>
                       <p className="feature-paragraph ml-3"> {item.body} </p>
                     </div>
@@ -73,7 +73,7 @@ const Store = ({ title, body, src, alt, data }) => {
           </Col>
         </Row>
       )}
-    </section>
+    </div>
   );
 };
 

@@ -5,10 +5,10 @@ import PaymentFeature from "./component/payment";
 import Ecommerce from "./component/ecommerce";
 import Logistics from "./component/logistics";
 import Store from "./component/store";
-import ConnectWIthUs from './component/connect';
-import BussinesTips from './component/businessTips';
-import BusinessTax from './component/businessTax';
-import Footer from '../../components/footer';
+import ConnectWIthUs from "./component/connect";
+import BussinesTips from "./component/businessTips";
+import BusinessTax from "./component/businessTax";
+import Footer from "../../components/footer";
 
 const data = [
   {
@@ -25,33 +25,36 @@ const data = [
 const IndexPage = ({ inputValue, onChange }) => {
   return (
     <>
-      <div className="header-container">
+      <section className="header-container">
         <Container>
           <Header inputValue={inputValue} onChange={onChange} />
         </Container>
-      </div>
+      </section>
       <Container>
         <PaymentFeature />
       </Container>
-      <div className="header-container">
+      <section className="header-container">
         <Container>
           <Ecommerce />
         </Container>
-      </div>
-      <Container>
-        <Logistics />
-      </Container>
-      <div className="header-container">
+      </section>
+      <section>
+        <Container>
+          <Logistics />
+        </Container>
+      </section>
+      <section className="header-container">
         <Container>
           <Store
             title="NO POS, NO WAHALA"
             body="Get paid from customer’s debit card into your account with a credit card reader and product barcode reader"
+            alt="laptop showing eapay's store"
             src={img}
             data={data}
           />
         </Container>
-      </div>
-      <div className='bg-second-color'>
+      </section>
+      <section className="bg-second-color">
         <Container>
           <ConnectWIthUs
             title="Connect with us for more information"
@@ -60,15 +63,17 @@ const IndexPage = ({ inputValue, onChange }) => {
             onChange={onChange}
           />
         </Container>
-      </div>
-      <div className="header-container">
+      </section>
+      <section className="header-container">
         <Container>
           <BussinesTips />
         </Container>
-      </div>
-      <Container>
-        <BusinessTax />
-      </Container>
+      </section>
+      <section>
+        <Container>
+          <BusinessTax />
+        </Container>
+      </section>
       <Footer />
     </>
   );
