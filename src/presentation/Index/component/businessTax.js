@@ -2,7 +2,7 @@ import Feature from "../../../components/feature";
 import { Tax as img } from "../../../assets";
 import { useMediaQueries } from '../../../HOC/useMediaQuery';
 
-const BusinessTax = ({ }) => {
+const BusinessTax = () => {
   const isMobile = useMediaQueries(0, 960);
   return (
       <Feature

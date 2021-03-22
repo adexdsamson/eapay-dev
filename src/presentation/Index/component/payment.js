@@ -2,7 +2,7 @@ import Feature from "../../../components/feature";
 import { qr } from "../../../assets";
 import { useMediaQueries } from "../../../HOC/useMediaQuery";
 
-const Payments = ({}) => {
+const Payments = () => {
   const isMobile = useMediaQueries(0, 960);
   return (
     <Feature
