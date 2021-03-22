@@ -8,7 +8,7 @@ const Payments = ({ title, body, src, alt }) => {
     <section>
       <Feature
         title="Experience seamless payment through different options"
-        body="Get paid offline with a customized QR code, just a scan takes customer to your Eapay account."
+        body="Get paid offline with a customized Eapay QR, just a scan gets you paid instantly."
         src={qr}
         alt="Qr code payment"
         reverse={isMobile ? true : false}

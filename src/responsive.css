@@ -1,0 +1,80 @@
+
+
+
+@media only screen and (min-width: 0px) and (max-width: 360px) {
+  .header-title {
+    font-size: 30px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+}
+
+
+
+@media only screen and (max-width: 500px) {
+  .header-title {
+    font-size: 33px;
+  }
+  .header-paragraph {
+    font-size: 18px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 20px;
+    top: -73px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 64px;
+    top: 0px;
+  }
+  .feature-title {
+    font-size: 30px;
+    line-height: 35px;
+  }
+  .feature-paragraph {
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0.02em;
+  }
+  .black-circle-reverse {
+    width: 283.35px;
+    left: 56px;
+    top: -319px;
+  }
+
+  .image-circle-reverse {
+    width: 283.35px;
+    left: 19px;
+    top: -247px;
+  }
+
+  .connect-title {
+    font-size: 25px;
+    line-height: 29px;
+  }
+  .connect-paragraph {
+    font-size: 18px;
+    line-height: 29px;
+    margin-bottom: 2rem;
+  }
+  #section {
+    padding: 7rem 0 !important;
+    height: 30rem !important;
+  }
+  .store-black-circle {
+    position: absolute;
+    width: 296.24px;
+    height: 390px;
+    left: 41px;
+    top: -41px;
+  }
+}

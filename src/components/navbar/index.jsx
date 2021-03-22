@@ -20,13 +20,7 @@ const Navigation = () => {
       >
         <Nav activeKey="/home">
           <Nav.Item>
-            <Nav.Link href="/">Home</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/about">About Eapay</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/contact" eventKey="link-1">Contact Us</Nav.Link>
+            <Nav.Link href="#">About Eapay</Nav.Link>
           </Nav.Item>
         </Nav>
         <Button disabled variant="outline-primary-eapay">Coming Soon</Button>

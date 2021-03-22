@@ -32,7 +32,7 @@ const IndexPage = () => {
                 label="Email Address"
                 name="email"
                 type="email"
-                inputContainerClassName=" w-sm-90 w-75 mb-3 "
+                inputContainerClassName="header-input mb-3 "
               />
               <Button
                 className="rounded text-capitalize"
@@ -46,7 +46,7 @@ const IndexPage = () => {
             </div>
           </Fade>
         </Col>
-        <Col md={6} className="d-none d-sm-block">
+        <Col md={6} className="d-none d-sm-block d-md-block">
           <Zoom>
             <img
               data-aos="fade-up"

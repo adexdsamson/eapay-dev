@@ -36,8 +36,11 @@ section {
 .header-paragraph {
   font-weight: normal;
   font-size: 18px;
-  line-height: 21px;
+  line-height: 31px;
   letter-spacing: 0.02em;
+}
+.header-input {
+  width: 75%;
 }
 
 .header-notification span {
@@ -74,7 +77,6 @@ section {
 }
 .circle3 {
   position: absolute;
-  height: 143px !important;
   width: 146px;
   left: 400px;
   top: -227px;
@@ -156,17 +158,16 @@ section {
 .feature-title {
   font-weight: 500;
   font-size: 45px;
-  line-height: 53px;
   letter-spacing: 0.02em;
 }
 
 .feature-paragraph {
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 18px;
+  line-height: 31px;
   letter-spacing: 0.02em;
 }
 .connect-paragraph {
-  font-size: 24px;
+  font-size: 18px;
   line-height: 28px;
   letter-spacing: 0.02em;
 }
@@ -214,67 +215,293 @@ section {
   top: 303px;
 }
 
-@media only screen and (max-width: 500px) {
+/* Responsive css start here  */
+
+@media only screen and (min-width: 0px) and (max-width: 280px) {
   .header-title {
-    font-size: 33px;
+    font-size: 21px;
   }
   .header-paragraph {
-    font-size: 18px;
+    font-size: 16px;
   }
-  .black-circle {
-    width: 283.35px;
-    left: 20px;
-    top: -73px;
-  }
-  .image-circle {
-    width: 283.35px;
-    left: 64px;
-    top: 0px;
+  .header-input {
+    width: 100%;
   }
   .feature-title {
-    font-size: 30px;
-    line-height: 35px;
-  }
-  .feature-paragraph {
-    font-size: 24px;
-    line-height: 28px;
-    letter-spacing: 0.02em;
-  }
-  .black-circle-reverse {
-    width: 283.35px;
-    left: 56px;
-    top: -319px;
-  }
-
-  .image-circle-reverse {
-    width: 283.35px;
-    left: 19px;
-    top: -247px;
-  }
-
-  .connect-title {
     font-size: 25px;
     line-height: 29px;
   }
-  .connect-paragraph {
-    font-size: 18px;
-    line-height: 29px;
-    margin-bottom: 2rem;
+  .feature-paragraph {
+    font-size: 16px;
+    line-height: 21px;
   }
-  #section {
-    padding: 7rem 0 !important;
-    height: 30rem !important;
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .black-circle-reverse {
+    position: absolute;
+    width: 214px;
+    height: 510px;
+    left: 45px;
+    top: -300px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .image-circle-reverse {
+    position: absolute;
+    width: 214px;
+    height: 510px;
+    left: 22px;
+    top: -248px;
   }
   .store-black-circle {
     position: absolute;
-    width: 296.24px;
+    width: 215px;
     height: 390px;
-    left: 41px;
-    top: -41px;
+    left: 33px;
+    top: -27px;
+  }
+  .connect-title {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 25px;
+  }
+  .connect-paragraph {
+    font-size: 16px;
+    line-height: 21px;
+  }
+  #section {
+    padding: 4rem 0 !important;
+    height: 22rem !important;
+  }
+}
+@media only screen and (min-width: 281px) and (max-width: 320px) {
+  .header-title {
+    font-size: 27px;
+  }
+  .header-input {
+    width: 100%;
+  }
+  .header-paragraph {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .feature-title {
+    font-size: 27px;
+    line-height: 1.2;
+  }
+  .feature-paragraph {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .black-circle-reverse {
+    width: 239px;
+    left: 60px;
+    top: -302px;
+  }
+  .image-circle-reverse {
+    width: 239px;
+    left: 18px;
+    top: -245px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .store-black-circle {
+    width: 239px;
+    left: 42px;
+    top: -28px;
+  }
+  .connect-title {
+    font-size: 27px;
+    line-height: 1.2;
+  }
+  .connect-paragraph {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  #section {
+    padding: 4rem 0 !important;
+    height: 24rem !important;
   }
 }
 
-@media only screen and (min-width: 0px) and (max-width: 360px) {
+@media only screen and (min-width: 321px) and (max-width: 360px) {
+  .header-title {
+    font-size: 30px;
+  }
+  .feature-title {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .feature-paragraph {
+    font-size: 18px;
+    line-height: 21px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .black-circle-reverse {
+    width: 280px;
+    left: 66px;
+    top: -319px;
+  }
+  .image-circle-reverse {
+    width: 280px;
+    left: 17px;
+    top: -259px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .store-black-circle {
+    width: 280px;
+    left: 41px;
+    top: -41px;
+  }
+  .connect-title {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .connect-paragraph {
+    font-size: 18px;
+    line-height: 21px;
+  }
+  #section {
+    height: 23rem !important;
+  }
+}
+@media only screen and (min-width: 361px) and (max-width: 411px) {
+  .header-title {
+    font-size: 34px;
+  }
+  .header-paragraph {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .feature-title {
+    font-size: 34px;
+    line-height: 1.2;
+  }
+  .feature-paragraph {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .black-circle-reverse {
+    width: 295px;
+    left: 81px;
+    top: -276px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .image-circle-reverse {
+    width: 295px;
+    left: 53px;
+    top: -200px;
+  }
+  .store-black-circle {
+    width: 295px;
+    left: 60px;
+    top: -41px;
+  }
+  .connect-title {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .connect-paragraph {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  #section {
+    height: 25rem !important;
+  }
+}
+@media only screen and (min-width: 412px) and (max-width: 414px) {
+  .header-title {
+    font-size: 34px;
+  }
+  .header-paragraph {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .header-input {
+    width: 100%;
+  }
+  .feature-title {
+    font-size: 34px;
+    line-height: 1.2;
+  }
+  .feature-paragraph {
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0.02em;
+  }
+  .connect-title {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .connect-paragraph {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .black-circle-reverse {
+    width: 320px;
+    left: 59px;
+    top: -319px;
+  }
+  .store-black-circle {
+    width: 320px;
+    left: 48px;
+    top: -41px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .image-circle-reverse {
+    position: absolute;
+    width: 320px;
+    height: 510px;
+    left: 27px;
+    top: -248px;
+  }
+  #section {
+    padding: 4rem 0 !important;
+    height: 24rem !important;
+  }
+}
+
+@media only screen and (min-width: 415px) and (max-width: 500px) {
   .header-title {
     font-size: 30px;
   }
@@ -287,5 +514,208 @@ section {
     width: 283.35px;
     left: 46px;
     top: 0px;
+  }
+}
+@media only screen and (min-width: 501px) and (max-width: 700px) {
+  .header-paragraph {
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.02em;
+  }
+  .black-circle-reverse {
+    width: 317px;
+    left: 130px;
+    top: -250px;
+  }
+  .image-circle-reverse {
+    width: 328px;
+    left: 82px;
+    top: -180px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .feature-title {
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+  .feature-paragraph {
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.02em;
+  }
+  #section {
+    padding: 4rem 0 !important;
+    height: 27rem !important;
+  }
+  .connect-title {
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+  .connect-paragraph {
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.02em;
+  }
+}
+@media only screen and (min-width: 701px) and (max-width: 900px) {
+  .header-title {
+    font-size: 30px;
+  }
+  .black-circle {
+    width: 283.35px;
+    left: 22px;
+    top: -66px;
+  }
+  .image-circle {
+    width: 283.35px;
+    left: 46px;
+    top: 0px;
+  }
+  .circle1 {
+    width: 190px;
+    left: 0px;
+    top: -299px;
+  }
+  .circle2 {
+    width: 180px;
+    left: 138px;
+    top: -27px;
+  }
+  .circle3 {
+    width: 130px;
+    left: 211px;
+    top: -202px;
+  }
+  .circle6 {
+    width: 69px;
+    left: 93px;
+    top: -84px;
+  }
+  .circle4 {
+    width: 158px;
+    left: 92px;
+    top: 161px;
+  }
+  .circle5 {
+    width: 127px;
+    left: -26px;
+    top: -19px;
+  }
+  .black-circle-reverse {
+    width: 319px;
+    left: 7px;
+    top: -215px;
+  }
+  .image-circle-reverse {
+    width: 319px;
+    left: -28px;
+    top: -138px;
+  }
+  .store-black-circle {
+    width: 319px;
+    left: 25px;
+    top: -41px;
+  }
+  .feature-title {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  .feature-paragraph {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1024px) {
+  .header-title {
+    font-size: 30px;
+  }
+  .black-circle {
+    width: 357px;
+    left: 22px;
+    top: -208px;
+  }
+  .image-circle {
+    width: 357px;
+    left: 89px;
+    top: -116px;
+  }
+  .circle1 {
+    width: 262px;
+    left: 0px;
+    top: -299px;
+  }
+  .circle2 {
+    width: 245px;
+    left: 216px;
+    top: -27px;
+  }
+  .circle3 {
+    width: 146px;
+    left: 297px;
+    top: -227px;
+  }
+  .circle6 {
+    width: 69px;
+    left: 119px;
+    top: -7px;
+  }
+  .circle4 {
+    width: 158px;
+    left: 92px;
+    top: 161px;
+  }
+  .circle5 {
+    width: 127px;
+    left: -50px;
+    top: -43px;
+  }
+  .feature-title {
+    font-size: 40px;
+    line-height: 1.2;
+  }
+  .feature-paragraph {
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: 0.02em;
+  }
+  .black-circle-reverse {
+    width: 375px;
+    left: 81px;
+    top: -253px;
+  }
+  .image-circle-reverse {
+    width: 402px;
+    left: -9px;
+    top: -180px;
+  }
+  .connect-title {
+    font-weight: 500;
+    font-size: 31px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .connect-paragraph {
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: 0.02em;
+  }
+  #section {
+    padding: 4rem 0 !important;
+    height: 18rem !important;
   }
 }

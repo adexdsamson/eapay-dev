@@ -16,7 +16,7 @@ const ConnectWithUs = ({ title, body, src, alt }) => {
           <Fade right>
             <Input label="Email Address" name="email" type="email" />
             <Button
-              className="rounded text-capitalize mt-3"
+              className="rounded text-capitalize mt-3 pr-5 pl-5 pt-2 pb-2"
               variant="primary-eapay"
             >
               subscribe
