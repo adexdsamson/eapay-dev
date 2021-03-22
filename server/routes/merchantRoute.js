@@ -12,6 +12,7 @@ const Merchant = mongoose.model("merchants");
 
 const emailCheck = require("../utils/checkEmail");
 const twilio = require("../utils/twilio");
+const utilsFunction = require("../utils/utilsFunction");
 
 const merchantVerify = require("../middleware/merchantVerify");
 const updateMerchant = require("../middleware/updateMerchant");
@@ -29,6 +30,8 @@ module.exports = (api) => {
   // on postman, pass the data through body under raw JSON
   api.post("/api/merchant/register", (req, res) => {
     const { email, password } = req.body;
+    if (utilsFunction.checkBody(email) || utilsFunction.checkBody(password))
+      return res.json("Invalid Parameter");
     let agent = userAgent.parse(req.headers["user-agent"]);
     let device = [];
     device.push(agent.toString());
@@ -41,21 +44,50 @@ module.exports = (api) => {
       twilio.twilioVerify(phone);
       obj = { phone, password, device };
     }
-    const merchant = new Merchant(obj);
-    merchant.save((err, doc) => {
-      if (err) return res.status(401).send(err);
-      res.status(200).json({ success: true, doc });
-    });
+    Merchant.find({})
+      .limit(1)
+      .sort({ accNumber: -1 })
+      .select("accNumber")
+      .exec((err, data) => {
+        if (err) return res.json(err);
+        let accNumber = data[0].accNumber + 1;
+        const merchant = new Merchant(obj, accNumber);
+        merchant.save((err, merchants) => {
+          if (err) return res.json(err);
+          res.status(200).json({
+            success: true,
+            merchant: {
+              name: merchants.fullname,
+              email: merchants.email,
+              phone: merchants.phone,
+              newDevice: merchants.newDevice,
+              token: merchants.token,
+              _id: merchants._id,
+              verified: merchants.verified,
+              lockUntil: merchants.lockUntil,
+              loginAttempt: merchants.loginAttempt,
+            },
+          });
+        });
+      });
   });
 
   //accept merchant id as url  query params
   //this is the route that receive the otp verificationn from phone
-  ///api/merchant/verify?id=${id} url format
+  ///api/merchant/verify?id=${id}&verify=${newDevice} url format
+  //$id=object id of the user and
+  //$newDevice=device state of the user either true or false
   //it returns the updated verification, logn date and new device state of the user
+  
   api.post("/api/merchant/verify", async (req, res) => {
-    let agent = userAgent.parse(req.headers["user-agent"]);
-    let device = agent.toString();
     const code = req.body.code;
+    if (
+      utilsFunction.checkBody(code) ||
+      utilsFunction.checkBody(req.body.phone) ||
+      utilsFunction.checkBody(req.query.id) ||
+      utilsFunction.checkBody(req.query.verify)
+    )
+      return res.json("Invalid Parameter");
     const phone =
       req.body.phone.length === 11
         ? req.body.phone.replace("0", "+234")
@@ -65,21 +97,35 @@ module.exports = (api) => {
     try {
       verificationResult = await twilio.twilioChecks(code, phone);
     } catch (e) {
-      return res.status(500).send(e);
+      return res.json(e);
     }
     if (verificationResult.status === "approved") {
-      Merchant.findByIdAndUpdate(
-        { _id: id },
-        {
-          $set: { verified: 1, lastLogin: Date.now() },
-          $push: { device: device },
-        },
-        { new: true },
-        (err, merchant) => {
-          if (err) return res.status(401).send(err);
-          return res.status(200).json({ success: true, merchant });
-        }
-      );
+      if (req.query.verify) {
+        Merchant.findByIdAndUpdate(
+          { _id: id },
+          {
+            $set: { verified: 1, lastLogin: Date.now() },
+          },
+          { new: true },
+          (err) => {
+            if (err) return res.json(err);
+            return res.status(200).json({ success: true });
+          }
+        );
+      } else {
+        Merchant.findByIdAndUpdate(
+          { _id: id },
+          {
+            $set: { verified: 1, lastLogin: Date.now() },
+            $push: { device: device },
+          },
+          { new: true },
+          (err) => {
+            if (err) return res.json(err);
+            return res.status(200).json({ success: true });
+          }
+        );
+      }
     }
   });
 
@@ -88,6 +134,8 @@ module.exports = (api) => {
   //on sucess returns the merchants data
   api.post("/api/merchant/login", (req, res) => {
     const { email, password } = req.body;
+    if (utilsFunction.checkBody(email) || utilsFunction.checkBody(password))
+      return res.json("Invalid Parameter");
     const isEmail = emailCheck(email);
     let obj = {};
     if (isEmail) {
@@ -99,26 +147,37 @@ module.exports = (api) => {
     let agent = userAgent.parse(req.headers["user-agent"]);
     let device = agent.toString();
     Merchant.loginMerchant(obj, password, device, (err, merchants, type) => {
-      if (err) return res.status(401).send(err);
+      if (err) return res.json(err);
       if (merchants) {
         merchants.getToken((err, merchants) => {
-          if (err) return res.status(401).send(err);
+          if (err) return res.json(err);
           return res
             .cookie("eapay", merchants.token)
             .status(200)
-            .json({ success: true, merchants });
+            .json({
+              success: true,
+              merchant: {
+                name: merchants.fullname,
+                email: merchants.email,
+                phone: merchants.phone,
+                newDevice: merchants.newDevice,
+                token: merchants.token,
+                _id: merchants._id,
+                verified: merchants.verified,
+                lockUntil: merchants.lockUntil,
+                loginAttempt: merchants.loginAttempt,
+              },
+            });
         });
       }
       let reason = Merchant.failedLogin;
       switch (type) {
         case reason.NOT_FOUND:
         case reason.PASSWORD_INCORRECT:
-          return res.status(401).send("Email or Password incorrect");
+          return res.json("Email or Password incorrect");
         case reason.MAX_ATTEMPTS:
           //Email notification on account
-          return res.status(401).send("Check Email  for account notification");
-        /* case reason.VERIFY_OTP:
-          return res.send("Please Verify your account");*/
+          return res.json("Check Email  for account notification");
       }
     });
   });
@@ -138,13 +197,13 @@ module.exports = (api) => {
     formidable(),
     (req, res) => {
       cloudinary.uploader.upload(req.files.file.path, (err, result) => {
-        if (err) return res.status(500).send(err);
+        if (err) return res.json(err);
         Merchant.findByIdAndUpdate(
           { _id: req.user._id },
           { docUpload: result.url },
           { new: true },
           (err, doc) => {
-            if (err) return res.status(500).send(err);
+            if (err) return res.json(err);
             res
               .status(200)
               .json({ success: true, msg: "File uploaded successfully" });
@@ -163,6 +222,12 @@ module.exports = (api) => {
     (req, res) => {
       const { accNumber, bank } = req.body;
       const body = req.body;
+      if (
+        utilsFunction.checkBody(body) ||
+        utilsFunction.checkBody(accNumber) ||
+        utilsFunction.checkBody(bank)
+      )
+        return res.json("Invalid Parameter");
       let options = {
         method: "GET",
         url: `https://api.paystack.co/bank/resolve?account_number=${accNumber}&bank_code=${bank}`,
@@ -180,14 +245,27 @@ module.exports = (api) => {
               { _id: req.user._id },
               { $set: req.body, qrcodeUrl: url },
               { new: true },
-              (err, doc) => {
-                if (err) return res.status(401).send(err);
-                return res.status(200).json({ success: true, doc });
+              (err, merchants) => {
+                if (err) return res.json(err);
+                return res.status(200).json({
+                  success: true,
+                  merchant: {
+                    name: merchants.fullname,
+                    email: merchants.email,
+                    phone: merchants.phone,
+                    newDevice: merchants.newDevice,
+                    token: merchants.token,
+                    _id: merchants._id,
+                    verified: merchants.verified,
+                    lockUntil: merchants.lockUntil,
+                    loginAttempt: merchants.loginAttempt,
+                  },
+                });
               }
             );
           });
         } else {
-          return res.status(401).send(resp.message);
+          return res.json(resp.message);
         }
       });
     }
@@ -203,7 +281,7 @@ module.exports = (api) => {
         { _id: req.user._id },
         { token: "" },
         (err, merchant) => {
-          if (err) return res.status(401).send(err);
+          if (err) return res.json(err);
           return res.status(200).json({ success: true });
         }
       );
