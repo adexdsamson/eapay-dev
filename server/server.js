@@ -50,7 +50,7 @@ admin.get("/*", (req, res) => {
 });
 
 // vhost usage
-app.use(vhost(process.env.DOMAIN, landingPage));
+app.use(vhost(process.env.DOMAIN || `www.${process.env.DOMAIN}`, landingPage));
 app.use(vhost(`mobile.${process.env.DOMAIN}`, mobile));
 app.use(vhost(`merchant.${process.env.DOMAIN}`, merchant));
 app.use(vhost(`admin.eapay.${process.env.DOMAIN}`, admin));
