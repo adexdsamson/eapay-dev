@@ -30,21 +30,23 @@ const IndexPage = ({ inputValue, onChange }) => {
           <Header inputValue={inputValue} onChange={onChange} />
         </Container>
       </section>
-      <Container>
-        <PaymentFeature />
-      </Container>
-      <section className="header-container">
-        <Container>
+      <section className='container-section'>
+        <Container className='h-100'>
+          <PaymentFeature />
+        </Container>
+      </section>
+      <section className="header-container container-section">
+        <Container className='h-100'>
           <Ecommerce />
         </Container>
       </section>
-      <section>
-        <Container>
+      <section className='container-section'>
+        <Container className='h-100'>
           <Logistics />
         </Container>
       </section>
-      <section className="header-container">
-        <Container>
+      <section className="header-container container-section">
+        <Container className='h-100'>
           <Store
             title="NO POS, NO WAHALA"
             body="Get paid from customer’s debit card into your account with a credit card reader and product barcode reader"
@@ -55,7 +57,7 @@ const IndexPage = ({ inputValue, onChange }) => {
         </Container>
       </section>
       <section className="bg-second-color">
-        <Container>
+        <Container className='h-100'>
           <ConnectWIthUs
             title="Connect with us for more information"
             body="We want to make business transaction easy for both vendors and customers"
@@ -64,13 +66,13 @@ const IndexPage = ({ inputValue, onChange }) => {
           />
         </Container>
       </section>
-      <section className="header-container">
-        <Container>
+      <section className="header-container container-section">
+        <Container className='h-100'>
           <BussinesTips />
         </Container>
       </section>
-      <section>
-        <Container>
+      <section className='container-section'>
+        <Container className='h-100'>
           <BusinessTax />
         </Container>
       </section>

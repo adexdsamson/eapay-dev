@@ -7,7 +7,7 @@ import { useMediaQueries } from "../../../HOC/useMediaQuery";
 const Store = ({ title, body, src, alt, data }) => {
   const isMobile = useMediaQueries(0, 960);
   return (
-    <div>
+    <>
       {isMobile ? (
         <Row className="h-100 align-items-center">
           <Col lg={6} md={6} sm={12}>
@@ -73,7 +73,7 @@ const Store = ({ title, body, src, alt, data }) => {
           </Col>
         </Row>
       )}
-    </div>
+    </>
   );
 };
 

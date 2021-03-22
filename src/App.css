@@ -11,8 +11,7 @@ header {
   height: 676px;
 }
 
-section {
-  /* padding: 10rem 0; */
+.container-section {
   height: 60rem;
 }
 
