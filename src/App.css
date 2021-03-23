@@ -42,7 +42,7 @@ header {
   width: 75%;
 }
 
-.header-notification span {
+.header-notification {
   font-size: 12px;
   line-height: 16px;
   color: #818181;

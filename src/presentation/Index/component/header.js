@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import { Col, Row, Button } from "react-bootstrap";
 import {
   circle1,
@@ -28,23 +29,7 @@ const IndexPage = ({ inputValue, onChange }) => {
                 Help vendors and customers experience seamless transactions; get
                 payment in more ways, easy delivery and tax audit.
               </p>
-              <Input
-                label="Email Address"
-                name="email"
-                type="email"
-                inputContainerClassName="header-input mb-3 "
-                value={inputValue}
-                onChange={onChange}
-              />
-              <Button
-                className="rounded text-capitalize"
-                variant="primary-eapay"
-              >
-                Get notified when we launch
-              </Button>
-              <div className="header-notification mt-2">
-                <span>*Don’t worry we will not spam you</span>
-              </div>
+              <Input />
             </div>
           </Fade>
         </Col>
@@ -57,11 +42,27 @@ const IndexPage = ({ inputValue, onChange }) => {
               src={circle1}
               alt="woman thinking"
             />
-            <img className="img-fluid circle2" src={circle2} alt="woman with bag" />
+            <img
+              className="img-fluid circle2"
+              src={circle2}
+              alt="woman with bag"
+            />
             <img className="img-fluid circle3" src={circle3} alt="black dot" />
-            <img className="img-fluid circle6" src={circle6} alt="small black dot" />
-            <img className="img-fluid circle4" src={circle4} alt="small white dot" />
-            <img className="img-fluid circle5" src={circle5} alt="large white dot" />
+            <img
+              className="img-fluid circle6"
+              src={circle6}
+              alt="small black dot"
+            />
+            <img
+              className="img-fluid circle4"
+              src={circle4}
+              alt="small white dot"
+            />
+            <img
+              className="img-fluid circle5"
+              src={circle5}
+              alt="large white dot"
+            />
           </Zoom>
         </Col>
       </Row>
