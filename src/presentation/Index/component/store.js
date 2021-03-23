@@ -62,8 +62,8 @@ const Store = ({ title, body, src, alt, data }) => {
                 {data.map((item, index) => (
                   <div key={index} className="d-flex align-items-center">
                     <img className="img-fluid" src={Dot} alt="dot" />
-                    <div>
-                      <p className="feature-paragraph ml-3"> {item.body} </p>
+                    <div className="mb-1">
+                      <p className="feature-paragraph ml-3 m-0"> {item.body} </p>
                     </div>
                   </div>
                 ))}

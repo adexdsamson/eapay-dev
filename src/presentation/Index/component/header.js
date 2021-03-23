@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import {
   circle1,
   circle2,
@@ -13,24 +13,22 @@ import Badge from "../../../components/comingSoon";
 import Input from "../../../components/floatingInput";
 import { Fade, Zoom } from "react-reveal";
 
-const IndexPage = ({ inputValue, onChange }) => {
+const IndexPage = () => {
   return (
-    <header className="pt-3">
+    <header id="home" className="pt-3">
       <Navbar />
       <Row className="d-flex h-90 align-items-center">
         <Col md={6}>
           <Fade left>
-            <div data-aos="fade-up">
-              <div className="mb-3">
-                <Badge label="Coming soon" />
-              </div>
-              <h1 className="header-title">More in one payment platform</h1>
-              <p className="header-paragraph">
-                Help vendors and customers experience seamless transactions; get
-                payment in more ways, easy delivery and tax audit.
-              </p>
-              <Input />
+            <div className="mb-3">
+              <Badge label="Coming soon" />
             </div>
+            <h1 className="header-title">More in one payment platform</h1>
+            <p className="header-paragraph">
+              Help vendors and customers experience seamless transactions; get
+              payment in more ways, easy delivery and tax audit.
+            </p>
+            <Input />
           </Fade>
         </Col>
         <Col md={6} className="d-none d-sm-block d-md-block">

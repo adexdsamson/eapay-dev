@@ -11,6 +11,10 @@ header {
   height: 676px;
 }
 
+.header-container > #about {
+  height: 300px;
+}
+
 .container-section {
   height: 60rem;
 }

@@ -17,7 +17,7 @@ const FloatingInput = () => {
             <div></div>
           </div>
           <form
-            novalidate=""
+            noValidate=""
             className="sp-element-container sp-lg sp-field-nolabel "
           >
             <div
