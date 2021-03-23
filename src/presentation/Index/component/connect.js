@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Fade } from "react-reveal";
 import Subscribe from '../../../components/floatingInput';
 
