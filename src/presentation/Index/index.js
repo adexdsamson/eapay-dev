@@ -49,7 +49,7 @@ const IndexPage = ({ inputValue, onChange }) => {
         <Container className='h-100'>
           <Store
             title="NO POS, NO WAHALA"
-            body="Get paid from customer’s debit card into your account with a credit card reader and product barcode reader"
+            body="Online platform that lets you accept payment through debit and credit cards in-person without POS."
             alt="laptop showing eapay's store"
             src={img}
             data={data}
