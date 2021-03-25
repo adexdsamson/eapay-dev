@@ -1,0 +1,23 @@
+.auth-side {
+  background-color: #2C4563;
+  color: white;
+}
+
+.auth-side > img {
+  position: absolute;
+  top: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+div.content-side  p {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+div.content-side h2 {
+  font-weight: 500;
+  font-size: 28px;
+}

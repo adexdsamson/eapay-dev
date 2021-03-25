@@ -1,25 +1,16 @@
 import { Container } from "react-bootstrap";
-import { Frame10 } from "../../Assets";
+import { Frame10, Logo } from "../../Assets";
 import { Slide } from "react-reveal";
+import "./index.css";
 
-const AuthSIdebar = () => {
+const AuthSidebar = () => {
   return (
-    <Container
-      className="h-100"
-      style={{ background: "#2C4563", color: "white" }}
-      fluid
-    >
+    <Container className="auth-side h-100" >
       <Slide left>
-        <img
-          style={{ position: "absolute", top: 20 }}
-          src={Frame10}
-          height={30}
-          width={30}
-          alt="logo"
-        />
-        <div className="d-flex flex-column align-items-center justify-content-center h-100">
-            <img src={Frame10} alt="phone purchase" className="w-50" />
-          <h2 className="text-center py-4">Merchant</h2>
+        <img src={Logo} alt="logo" />
+        <div className="content-side d-flex flex-column align-items-center justify-content-center h-100">
+          <img src={Frame10} alt="phone purchase" className="w-50" />
+          <h2 className="text-center py-3">Merchant</h2>
           <p className="text-center">
             Help you and your customer experience seamless payment transactions;
             get payment in more ways, easy delivery and tax audit
@@ -30,4 +21,4 @@ const AuthSIdebar = () => {
   );
 };
 
-export default AuthSIdebar;
+export default AuthSidebar;

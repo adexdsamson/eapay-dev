@@ -1,15 +1,15 @@
 import { Container, Row, Col } from "react-bootstrap";
-import "./index.css";
+// import "./index.css";
 import { Logo } from '../../Assets'; 
 import Sidebar from "../../components/sidebar/authSidebar";
 import FloatingLabel from "../../components/floatingLabel";
 import { Link } from "react-router-dom";
 import { Slide } from "react-reveal";
-import { REGISTER_ROUTE, RESET_ROUTE } from '../../routes';
 import MediaQuery from "../../hooks/useMediaQuery";
 import Button from "../../components/button";
+import { LOGIN_ROUTE } from '../../routes';
 
-const LoginPresentation = () => {
+const RegisterPresentation = () => {
   const isMobile = MediaQuery("down", "md");
   return (
     <div className="login-top-container">
@@ -26,7 +26,7 @@ const LoginPresentation = () => {
                 <div className={`container-div ${isMobile ? 'w-100 text-center' : 'w-75'} mx-auto`}>
                  {isMobile ? <img src={Logo} alt="logo" className='mb-4' /> : null }
                   <h5 className={`mb-4 ${isMobile ? 'text-center' : ''}`}>
-                    Welcome back, let start today’s business
+                  Welcome to Eapay, let’s build your business together
                   </h5>
                   <FloatingLabel
                     name="email"
@@ -44,21 +44,18 @@ const LoginPresentation = () => {
                       <Button
                         variant="primary"
                         className="w-100"
-                        label="Login"
+                        label="Register"
                       />
                     </Col>
                     <Col className='mt-lg-0 mt-4'>
-                      <Link to={REGISTER_ROUTE}>
+                      <Link to={LOGIN_ROUTE}>
                         <span className="text-dark">
-                          I don’t have an account?{"   "}
+                        Aleady have an account?{"   "}
                         </span>
-                        Register
+                        click here
                       </Link>
                     </Col>
                   </Row>
-                  <div className='mt-3'>
-                    <Link to={RESET_ROUTE}>Forgot password</Link>
-                  </div>
                 </div>
               </form>
             </Slide>
@@ -69,4 +66,4 @@ const LoginPresentation = () => {
   );
 };
 
-export default LoginPresentation;
+export default RegisterPresentation;

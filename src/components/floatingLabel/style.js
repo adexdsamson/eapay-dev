@@ -4,7 +4,6 @@ const styles = createUseStyles({
   floatingLabelWrap: {
     display: "flex",
     flexDirection: "column",
-    // minWidth: 350,
     position: "relative",
     transformOrigin: "top left",
     transition: "all 0.5s ease-out",
@@ -18,7 +17,7 @@ const styles = createUseStyles({
     height: 60,
     padding: "14px 15px 0 20px",
     outline: 0,
-    borderRadius: 10,
+    borderRadius: 5,
     background: 'rgba(196, 196, 196, 0.18)',
     fontSize: 20,
     fontWeight: 300,
