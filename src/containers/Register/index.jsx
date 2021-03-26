@@ -4,6 +4,7 @@ import Adapter from '../../adapter';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { GET_STARTED_DASHBOARD_ROUTE } from '../../routes'
+import { notify } from '../../store/actionTypes';
 
 class RegisterContainer extends Component {
   constructor(props) {
@@ -17,20 +18,22 @@ class RegisterContainer extends Component {
   }
 
   render() { 
-    let { handleSubmit, props: { isloading } } = this
-    return <View onSubmit={handleSubmit} loading={isloading} />;
+    let { handleSubmit, props: { isloading, isNotification, onClose } } = this
+    return <View onSubmit={handleSubmit} notify={isNotification} loading={isloading}  onNotificationCancel={onClose} />;
   }
 }
 
 const mapStateToProps = state => {
   return {
-    isloading: state.otherReducer.isloading
+    isloading: state.otherReducer.isloading,
+    isNotification: state.otherReducer.notify,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCreate: (data) => dispatch(Adapter.createUserAccount(data))
+    onCreate: (data) => dispatch(Adapter.createUserAccount(data)),
+    onClose: () => dispatch(notify(''))
   }
 }
 

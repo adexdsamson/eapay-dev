@@ -10,13 +10,22 @@ import { REGISTER_ROUTE, RESET_ROUTE } from "../../routes";
 import MediaQuery from "../../hooks/useMediaQuery";
 import Button from "../../components/button";
 import Loader from "../../components/loader";
-import Notification from '../../components/notification';
+import Notification from "../../components/notification";
 
-const LoginPresentation = ({ handleSubmit, loading, notify  }) => {
+const LoginPresentation = ({
+  handleSubmit,
+  loading,
+  notify,
+  onNotificationCancel,
+}) => {
   const isMobile = MediaQuery("down", "md");
   return (
     <div className="login-top-container">
-      {notify ? <Notification content="Hello this is a notification" /> : null}
+      <Notification
+        content={notify}
+        onCancel={onNotificationCancel}
+        notify={notify}
+      />
       {loading ? (
         <Loader />
       ) : (
@@ -43,7 +52,7 @@ const LoginPresentation = ({ handleSubmit, loading, notify  }) => {
                     </h5>
                     <Field
                       name="email"
-                      type="email"
+                      type="text"
                       label="Email or Phone"
                       component={FloatingLabel}
                     />

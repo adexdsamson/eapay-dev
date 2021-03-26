@@ -2,8 +2,8 @@ import { createActions } from 'redux-actions'
 
 
 
-export const { user, isloading, error } = createActions({
+export const { user, isloading, notify } = createActions({
   USER: (data) => ( data ),
   ISLOADING: (state) => (state),
-  ERROR: (error) => (error)
+  NOTIFY: (state) => (state)
 })
