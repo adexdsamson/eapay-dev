@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
       : user.email;
     if (
       !user.verified ||
+
       user.newDevice 
      // Date.now() > user.lastLogin + newlogin
     ) {

@@ -27,6 +27,7 @@ module.exports = (api) => {
   //the merchant register route accept email and password
   //the route will  process if user phone number is entered
   //it returns the error with the error msg as json and success with the merchant data
+  // on postman, pass the data through body under raw JSON
   api.post("/api/merchant/register", (req, res) => {
     const { email, password } = req.body;
     if (utilsFunction.checkBody(email) || utilsFunction.checkBody(password))
@@ -71,8 +72,6 @@ module.exports = (api) => {
   //it returns the updated verification, logn date and new device state of the user
 
   api.post("/api/merchant/verify", async (req, res) => {
-    let agent = userAgent.parse(req.headers["user-agent"]);
-    let device = agent.toString();
     const code = req.body.code;
     if (
       utilsFunction.checkBody(code) ||

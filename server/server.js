@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/storage',express.static(path.join(__dirname, "./server/storage")))
 
-landingPage.use(express.static(path.join(__dirname, "views/index")));
+landingPage.use(express.static(path.join(__dirname, "views/index/build")));
 mobile.use(express.static(path.join(__dirname, "views/mobile")));
 merchant.use(express.static(path.join(__dirname, "views/merchant")));
 admin.use(express.static(path.join(__dirname, "views/admin")));
@@ -62,6 +62,7 @@ app.use(vhost(`api.${process.env.DOMAIN}`, api));
 require("./routes/userRoute")(app);
 require("./routes/merchantRoute")(app);
 require('./routes/merchantProduct')(app)
+
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running at port: ${PORT}`));
