@@ -82,6 +82,7 @@ module.exports = (api) => {
       utilsFunction.checkBody(req.body.phone)
     )
       return res.json("Invalid Parameter");
+
     const code = req.body.code;
     const phone =
       req.body.phone.length === 11
