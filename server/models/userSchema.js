@@ -9,6 +9,7 @@ const LOCK_UNTIL = 0.5 * 60 * 60 * 1000; //lock the user out after 5consecutive 
 
 const userSchema = monogoose.Schema({
   username: String,
+  eapayId:String,
   email: { type: String, unique: 1 },
   password: { type: String, minLength: 8 },
   phone: { type: Number, minLength: 10, maxLength: 14, unique: 1 },
