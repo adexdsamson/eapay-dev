@@ -29,6 +29,7 @@ console.log(
 
 app.use(express.json());
 app.use(cookieParser());
+app.use('/storage',express.static(path.join(__dirname, "./server/storage")))
 
 landingPage.use(express.static(path.join(__dirname, "views/index")));
 mobile.use(express.static(path.join(__dirname, "views/mobile")));
@@ -51,6 +52,7 @@ admin.get("/*", (req, res) => {
 
 // vhost usage
 app.use(vhost(process.env.DOMAIN, landingPage));
+app.use(vhost(`www.${process.env.DOMAIN}`, landingPage));
 app.use(vhost(`mobile.${process.env.DOMAIN}`, mobile));
 app.use(vhost(`merchant.${process.env.DOMAIN}`, merchant));
 app.use(vhost(`admin.eapay.${process.env.DOMAIN}`, admin));
