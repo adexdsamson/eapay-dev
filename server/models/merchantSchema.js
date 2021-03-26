@@ -10,8 +10,8 @@ const LOCK_UNTIL = 0.5 * 60 * 60 * 1000; //lock the user out after 5consecutive 
 const SALT = 10;
 
 const merchantSchema = monogoose.Schema({
-  email: { type: String, unique: 1 },
-  phone: { type: Number, unique: 1 },
+  email: { type: String },
+  phone: { type: Number },
   password: { type: String, minLength: 8 },
   businessName: { type: String },
   businessDesc: String,
@@ -21,13 +21,14 @@ const merchantSchema = monogoose.Schema({
   location: String,
   position: String,
   bank: Number,
-  accNumber: { type: Number, unique: 1 },
+  accNumber: { type: Number },
   document: String,
   docUpload: String,
   token: String,
   lastLogin: Number,
   device: [String],
   newDevice: { type: Boolean, default: 1 },
+  qrcodeUrl: String,
   qrcodeUrl: String,
   verified: { type: Boolean, default: 0 },
   lockUntil: { type: Number, default: 0 },
