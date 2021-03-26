@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 // import "./index.css";
 import { Logo } from '../../Assets'; 
-import Sidebar from "../../components/sidebar/authSidebar";
+import Sidebar from "../../parts/sidebar/authSidebar";
 import FloatingLabel from "../../components/floatingLabel";
 import { Slide } from "react-reveal";
 import MediaQuery from "../../hooks/useMediaQuery";

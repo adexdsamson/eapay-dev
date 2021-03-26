@@ -1,0 +1,35 @@
+#topbar {
+  position:fixed;
+  top: 0px; /* has to be around the height of the bar or more. */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99999;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  /* background-color: #751414; */
+  color: #fff;
+  transition: top 1s;
+}
+#topbar > p {
+  font-size: 14px;
+}
+#toggleTop {
+  display: none;
+}
+/* Styling the lables, to show and hide the bar */
+#showTop {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 30px;
+  display: block;
+  padding: 10px;
+  background-color: #000000;
+  color: #fff;
+}
+
+/* .bg-danger {
+  background-color: #751414;
+} */
