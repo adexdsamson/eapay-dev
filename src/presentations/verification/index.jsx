@@ -49,9 +49,11 @@ const VerificationPresentation = ({
                       or phone number
                     </h5>
                     <Field
-                      name="email"
-                      type="text"
+                      name="code"
+                      type="number"
                       label="Verification"
+                      minLength={6}
+                      maxLength={6}
                       component={FloatingLabel}
                     />
                     <Row className="mt-3 align-items-center">

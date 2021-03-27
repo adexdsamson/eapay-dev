@@ -2,7 +2,7 @@ import { Component } from "react";
 import View from "../../presentations/verification";
 import Adapter from "../../adapter";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { GET_STARTED_DASHBOARD_ROUTE } from "../../routes";
 import { notify } from "../../store/actionTypes";
 
@@ -13,8 +13,16 @@ class VerificationContainer extends Component {
   }
 
   handleSubmit = async (values) => {
-    const response = await this.props.onLogin(values);
-    // if (response) return <Redirect path={GET_STARTED_DASHBOARD_ROUTE} />
+    const user = this.props.user;
+    const data = {
+      ...values,
+      phone: `+${user?.phone}`
+    }
+    const response = await this.props.onVerification(data, {
+      id: user?._id,
+      verify: user?.newDevice,
+    });
+    if (response) this.props.history.push(GET_STARTED_DASHBOARD_ROUTE)
   };
 
   render() {
@@ -37,17 +45,18 @@ const mapStateToProps = (state) => {
   return {
     isloading: state.otherReducer.isloading,
     isNotification: state.otherReducer.notify,
+    user: state.otherReducer.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (data) => dispatch(Adapter.verifyUserAccount(data)),
+    onVerification: (data, query) =>
+      dispatch(Adapter.verifyUserAccount(data, query)),
     onClose: () => dispatch(notify("")),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VerificationContainer);
+const connectedRoute = withRouter(VerificationContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(connectedRoute);

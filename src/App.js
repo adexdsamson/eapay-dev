@@ -9,13 +9,14 @@ import {
   VERIFICATION_ROUTE,
   RESET_ROUTE,
 } from "./routes";
+import DashboardRoute from './dashboard'
 
 const Login = lazy(() => import("./containers/Login"));
 const Register = lazy(() => import("./containers/Register"));
 const Verification = lazy(() => import("./containers/Verification"));
 const Reset = lazy(() => import("./containers/Reset"));
 
-const GetStarted = lazy(() => import("./containers/Dashboard/GetStarted"));
+
 
 function App() {
   return (
@@ -26,9 +27,7 @@ function App() {
         <Route exact path={VERIFICATION_ROUTE} component={Verification} />
         <Route exact path={RESET_ROUTE} component={Reset} />
         <Route path="/dashboard">
-          <Switch>
-            <Route  path="/d" component={GetStarted} />
-          </Switch>
+          <DashboardRoute />
         </Route>
       </Switch>
     </Suspense>
