@@ -2,8 +2,8 @@ import { Component } from "react";
 import View from "../../presentations/login";
 import Adapter from "../../adapter";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { GET_STARTED_DASHBOARD_ROUTE } from "../../routes";
+import { withRouter } from "react-router-dom";
+import { GET_STARTED_DASHBOARD_ROUTE, VERIFICATION_ROUTE } from "../../routes";
 import { notify } from "../../store/actionTypes";
 
 class LoginContainer extends Component {
@@ -14,7 +14,7 @@ class LoginContainer extends Component {
 
   handleSubmit = async (values) => {
     const response = await this.props.onLogin(values);
-    // if (response) return <Redirect path={GET_STARTED_DASHBOARD_ROUTE} />
+    if (response) await this.props.history.push(VERIFICATION_ROUTE);
   };
 
   render() {
@@ -43,8 +43,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (data) => dispatch(Adapter.loginUserAccount(data)),
-    onClose: () => dispatch(notify(''))
+    onClose: () => dispatch(notify("")),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+const connectedRoute = withRouter(LoginContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(connectedRoute);

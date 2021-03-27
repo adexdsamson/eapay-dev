@@ -2,7 +2,7 @@ import { Component } from "react";
 import View from "../../presentations/register";
 import Adapter from "../../adapter";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { GET_STARTED_DASHBOARD_ROUTE, VERIFICATION_ROUTE } from "../../routes";
 import { notify } from "../../store/actionTypes";
 
@@ -14,13 +14,12 @@ class RegisterContainer extends Component {
 
   handleSubmit = async (values) => {
     const response = await this.props.onCreate(values);
-    console.log( "hello")
-    if (response.newDevice === true) {
-      return <Redirect to={VERIFICATION_ROUTE} />;
-    } else if (response.verified === false) {
-      return <Redirect to={VERIFICATION_ROUTE} />;
+    if (response.merchant.newDevice === true) {
+      this.props.history.push(VERIFICATION_ROUTE)
+    } else if (response.merchant.verified === false) {
+      this.props.history.push(VERIFICATION_ROUTE)
     } else {
-      return <Redirect to={GET_STARTED_DASHBOARD_ROUTE} />;
+      this.props.history.push(GET_STARTED_DASHBOARD_ROUTE)
     }
   };
 
@@ -54,4 +53,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);
+const connectedRoute = withRouter(RegisterContainer)
+
+export default connect(mapStateToProps, mapDispatchToProps)(connectedRoute);

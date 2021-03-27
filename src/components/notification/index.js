@@ -10,7 +10,7 @@ const NotificationBar = ({ content, status, onCancel, notify }) => {
         id="topbar"
       >
         <p className="m-0">{content}</p>
-        <label onClick={onCancel} className="m-0" for="toggleTop" id="hideTop">
+        <label onClick={onCancel} className="m-0"  id="hideTop">
           X
         </label>
       </div>
