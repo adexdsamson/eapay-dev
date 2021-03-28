@@ -33,9 +33,9 @@ app.use(cookieParser());
 app.use('storage',express.static(path.join(__dirname, "/server/storage")))
 
 landingPage.use(express.static(path.join(__dirname, "views/index/build")));
-mobile.use(express.static(path.join(__dirname, "views/mobile")));
-merchant.use(express.static(path.join(__dirname, "views/merchant")));
-admin.use(express.static(path.join(__dirname, "views/admin")));
+mobile.use(express.static(path.join(__dirname, "views/mobile/build")));
+merchant.use(express.static(path.join(__dirname, "views/merchant/build")));
+admin.use(express.static(path.join(__dirname, "views/admin/build")));
 
 // View route
 landingPage.get("/*", (req, res) => {
