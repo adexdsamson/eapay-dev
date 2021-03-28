@@ -10,6 +10,10 @@ a:hover {
   border-radius: 9px;
 }
 
+.text-eapay {
+  color: #588ac5;
+}
+
 .btn-primary-eapay {
   background-color: #588ac5 !important;
   color: white !important;
