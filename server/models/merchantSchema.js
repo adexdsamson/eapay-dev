@@ -1,4 +1,4 @@
-const monogoose = require("mongoose");
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config;
@@ -9,19 +9,81 @@ const MAX_LOGIN = 5;
 const LOCK_UNTIL = 0.5 * 60 * 60 * 1000; //lock the user out after 5consecutive failed login attempt
 const SALT = 10;
 
-const merchantSchema = monogoose.Schema({
-  email: { type: String },
-  phone: { type: Number },
-  password: { type: String, minLength: 8 },
-  businessName: { type: String },
+const merchantSchema = mongoose.Schema({
+  email: {
+    type: String,
+    trim: true,
+    validate: async (value, isValid) => {
+      try {
+        await merchantModel.findOne({ email: value }).exec((err, user) => {
+          if (err) return Promise.reject(new Error("Address already taken!"));
+          if (user) return true;
+        });
+      } catch (error) {
+        return Promise.reject(new Error("Address already taken!"));
+      }
+    },
+  },
+  phone: {
+    type: Number,
+    trim: true,
+    validate: async (value) => {
+      try {
+        await merchantModel.findOne({ phone: value }).exec((err, user) => {
+          if (err) return Promise.reject(new Error("Phone number in use!"));
+          if (user) return true;
+        });
+      } catch (error) {
+        return Promise.reject(new Error("Phone number in use!"));
+      }
+    },
+  },
+  businessName: {
+    type: String,
+    trim: true,
+    validate: async (value) => {
+      try {
+        await merchantModel
+          .findOne({ businessName: value })
+          .exec((err, user) => {
+            if (res)
+              return Promise.reject(
+                new Error("CAC won't issue two business name!")
+              );
+            if (user) return true;
+          });
+      } catch (error) {
+        return Promise.reject(new Error("CAC won't issue two business name!"));
+      }
+    },
+  },
+  accNumber: {
+    type: Number,
+    trim: true,
+    validate: async (value) => {
+      try {
+        await merchantModel.findOne({ accNumber: value }).exec((err, user) => {
+          if (res)
+            return Promise.reject(
+              new Error("This account number is already in use!")
+            );
+          if (user) return true;
+        });
+      } catch (error) {
+        return Promise.reject(
+          new Error("This account number is already in use!")
+        );
+      }
+    },
+  },
   businessDesc: String,
+  password: { type: String, minLength: 8, required: true },
   industry: String,
   category: String,
   fullname: String,
   location: String,
   position: String,
   bank: Number,
-  accNumber: { type: Number },
   document: String,
   docUpload: String,
   token: String,
@@ -156,4 +218,4 @@ merchantSchema.statics.findToken = function (token, cb) {
   });
 };
 
-monogoose.model("merchants", merchantSchema);
+const merchantModel = mongoose.model("merchants", merchantSchema);

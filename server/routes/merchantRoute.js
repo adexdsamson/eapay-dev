@@ -41,12 +41,14 @@ module.exports = (api) => {
       obj = { email, password, device };
     } else {
       const phone = email.length === 11 ? email.replace("0", "+234") : email;
-      twilio.twilioVerify(phone);
       obj = { phone, password, device };
     }
     const merchant = new Merchant(obj);
     merchant.save((err, merchants) => {
-      if (err) return res.json(err);
+      if (err) return res.json({ success: false, err });
+      if (obj.email === undefined) {
+        twilio.twilioVerify(obj.phone);
+      }
       res.status(200).json({
         success: true,
         merchant: {
