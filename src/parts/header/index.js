@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Avatar } from "@material-ui/core";
 import { Bell, BellOutline, Menu } from "heroicons-react";
 
-const Header = ({ title, src, mode, isMobile, isNotification, onMenu }) => {
+const Header = ({ title, avatarSrc, mode, isMobile, isNotification, onMenu }) => {
   return (
     <div className="page-header d-flex align-items-center justify-content-between">
       <div className="d-flex align-items-center">
@@ -19,7 +19,7 @@ const Header = ({ title, src, mode, isMobile, isNotification, onMenu }) => {
         ) : (
           <BellOutline  className="ml-3 mr-3 mb-0 text-muted" />
         )}
-        <Avatar src={src} />
+        <Avatar src={avatarSrc} />
       </div>
     </div>
   );
@@ -27,7 +27,7 @@ const Header = ({ title, src, mode, isMobile, isNotification, onMenu }) => {
 
 Header.propTypes = {
   title: PropTypes.string, 
-  src: PropTypes.string, 
+  avatarSrc: PropTypes.string, 
   mode: PropTypes.string, 
   isMobile: PropTypes.bool, 
   isNotification: PropTypes.bool, 

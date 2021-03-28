@@ -4,8 +4,9 @@ import Sidebar from "../sidebar";
 import Header from "../header";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { Fade } from "react-reveal";
+import { connect } from 'react-redux';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user }) => {
   const isMobile = useMediaQuery("down", "md");
   const [drawer, setDrawer] = useState(false);
   const openDrawer = drawer ? "d-block" : "d-none";
@@ -25,7 +26,7 @@ const Layout = ({ children }) => {
         </div>
         <div className="page-body">
           <div className="container">
-            <Header onMenu={() => setDrawer(true)} isMobile={isMobile} />
+            <Header onMenu={() => setDrawer(true)} isMobile={isMobile} avatarSrc={user?.avatar} mode={user?.mode} />
             {children}
           </div>
         </div>
@@ -34,4 +35,10 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+const mapStateToProps = state => {
+  return {
+    user: state.otherReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(Layout);
