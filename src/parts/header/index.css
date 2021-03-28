@@ -1,0 +1,11 @@
+.page-header {
+  position: fixed;
+  top: 20px;
+  width: calc(100% - 300px);
+}
+.page-header h3 {
+  text-transform: capitalize;
+  line-height: 56px;
+  font-size: 35px;
+  font-weight: 500;
+}

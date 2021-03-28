@@ -21,3 +21,10 @@ div.content-side h2 {
   font-weight: 500;
   font-size: 28px;
 }
+
+aside.sidebar {
+  width: 100%;
+  height: 100vh;
+  border-radius: 0px 70px 0px 0px;
+  background: #2C4563;
+}

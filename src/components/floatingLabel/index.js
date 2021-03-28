@@ -30,7 +30,9 @@ const FloatingInput = ({
           {label}
         </label>
       </div>
-      {meta?.touched && meta?.error}
+      {meta.touched &&
+        ((meta.error && <span className='text-danger'>{meta.error}</span>) ||
+          (meta.warning && <span className='text-warning'>{meta.warning}</span>))}
     </div>
   );
 };

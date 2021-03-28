@@ -1,8 +1,9 @@
-import {} from 'react';
+// import {} from 'react';
+import './index.css'
 
 const Sidebar = ({}) => {
   return ( 
-    <aside>
+    <aside className='sidebar'>
       <div></div>
     </aside>
    );

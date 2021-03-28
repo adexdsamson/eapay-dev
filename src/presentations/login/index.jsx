@@ -9,6 +9,7 @@ import { Slide } from "react-reveal";
 import { REGISTER_ROUTE, RESET_ROUTE } from "../../routes";
 import MediaQuery from "../../hooks/useMediaQuery";
 import Button from "../../components/button";
+import { maxLength6, email, phoneNumber, alphaNumeric, validateNumEmail } from '../../utils/formVaidation'; 
 import Loader from "../../components/loader";
 import Notification from "../../components/notification";
 
@@ -54,6 +55,7 @@ const LoginPresentation = ({
                       name="email"
                       type="text"
                       label="Email or Phone"
+                      validate={validateNumEmail}
                       component={FloatingLabel}
                     />
                     <Field

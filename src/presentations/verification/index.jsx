@@ -8,12 +8,15 @@ import MediaQuery from "../../hooks/useMediaQuery";
 import Button from "../../components/button";
 import Notification from "../../components/notification";
 import Loader from "../../components/loader";
+import { maxLength6, minLength6 } from '../../utils/formVaidation';
 
 const VerificationPresentation = ({
   handleSubmit,
   loading,
   notify,
   onNotificationCancel,
+  pristine,
+  submitting
 }) => {
   const isMobile = MediaQuery("down", "md");
   return (
@@ -54,6 +57,7 @@ const VerificationPresentation = ({
                       label="Verification"
                       minLength={6}
                       maxLength={6}
+                      validate={[minLength6, maxLength6 ]}
                       component={FloatingLabel}
                     />
                     <Row className="mt-3 align-items-center">
@@ -62,6 +66,7 @@ const VerificationPresentation = ({
                           variant="primary"
                           className="w-100"
                           label="Verify"
+                          disabled={submitting}
                         />
                       </Col>
                       <Col className="mt-lg-0 mt-4"></Col>

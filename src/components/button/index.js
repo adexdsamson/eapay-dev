@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Button = ({ label, variant, rounded, className }) => {
+const Button = ({ label, variant, rounded, className, ...props }) => {
   const variation =
     variant === "primary"
       ? "btn-primary-eapay"
@@ -13,7 +13,7 @@ const Button = ({ label, variant, rounded, className }) => {
       : "";
   const isRounded = rounded ? "btn-rounded-eapay " : "";
   return (
-    <button className={`btn ${variation} ${isRounded} ${className}`}>
+    <button {...props} className={`btn ${variation} ${isRounded} ${className}`}>
       {label}
     </button>
   );
