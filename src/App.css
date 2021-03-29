@@ -13,6 +13,12 @@ a:hover {
 .text-eapay {
   color: #588ac5;
 }
+.overflowX {
+  overflow-x: auto;
+}
+.overflowY {
+  overflow-y: auto;
+}
 
 .btn-primary-eapay {
   background-color: #588ac5 !important;
@@ -59,4 +65,61 @@ a > span {
 
 a:hover {
   text-decoration: none;
+}
+
+.getStarted-p {
+  width: 50%;
+  color: rgba(0, 0, 0, 0.25);
+  line-height: 21px;
+}
+
+
+
+
+
+@media only screen and (min-width: 0px) and (max-width: 280px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 281px) and (max-width: 320px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 360px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 361px) and (max-width: 411px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 412px) and (max-width: 414px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 415px) and (max-width: 500px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 501px) and (max-width: 700px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 701px) and (max-width: 900px) {
+  .getStarted-p {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1024px) {
+
 }

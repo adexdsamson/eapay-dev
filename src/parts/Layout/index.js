@@ -23,7 +23,7 @@ const Layout = ({ children, drawer, onDrawer }) => {
             </Fade>
           ) : null}
         </div>
-        <div className="page-body">
+        <div style={{ height: "100vh" }} className="page-body overflowY">
           <div className="container">
             {children}
           </div>
