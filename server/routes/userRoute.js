@@ -4,7 +4,7 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 
 const SHA1 = require("crypto-js/sha1");
-const userAgent = require("useragent");
+// const userAgent = require("useragent");
 
 const twilio = require("../utils/twilio");
 
