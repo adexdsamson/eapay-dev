@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config;
 
 const twilio = require("../utils/twilio");
+const random = require("../utils/random");
+const mail = require("../utils/mail/mail");
 
 const MAX_LOGIN = 5;
 const LOCK_UNTIL = 0.5 * 60 * 60 * 1000; //lock the user out after 5consecutive failed login attempt
@@ -12,68 +14,30 @@ const SALT = 10;
 const merchantSchema = mongoose.Schema({
   email: {
     type: String,
-    trim: true,
-    validate: async (value, isValid) => {
-      try {
-        await merchantModel.findOne({ email: value }).exec((err, user) => {
-          if (err) return Promise.reject(new Error("Address already taken!"));
-          if (user) return true;
-        });
-      } catch (error) {
-        return Promise.reject(new Error("Address already taken!"));
-      }
+    index: {
+      unique: true,
+      partialFilterExpression: { email: { $type: "string" } },
     },
   },
   phone: {
     type: Number,
-    trim: true,
-    validate: async (value) => {
-      try {
-        await merchantModel.findOne({ phone: value }).exec((err, user) => {
-          if (err) return Promise.reject(new Error("Phone number in use!"));
-          if (user) return true;
-        });
-      } catch (error) {
-        return Promise.reject(new Error("Phone number in use!"));
-      }
+    index: {
+      unique: true,
+      partialFilterExpression: { phone: { $type: "number" } },
     },
   },
   businessName: {
     type: String,
-    trim: true,
-    validate: async (value) => {
-      try {
-        await merchantModel
-          .findOne({ businessName: value })
-          .exec((err, user) => {
-            if (res)
-              return Promise.reject(
-                new Error("CAC won't issue two business name!")
-              );
-            if (user) return true;
-          });
-      } catch (error) {
-        return Promise.reject(new Error("CAC won't issue two business name!"));
-      }
+    index: {
+      unique: true,
+      partialFilterExpression: { businessName: { $type: "string" } },
     },
   },
   accNumber: {
     type: Number,
-    trim: true,
-    validate: async (value) => {
-      try {
-        await merchantModel.findOne({ accNumber: value }).exec((err, user) => {
-          if (res)
-            return Promise.reject(
-              new Error("This account number is already in use!")
-            );
-          if (user) return true;
-        });
-      } catch (error) {
-        return Promise.reject(
-          new Error("This account number is already in use!")
-        );
-      }
+    index: {
+      unique: true,
+      partialFilterExpression: { accNumber: { $type: "number" } },
     },
   },
   businessDesc: String,
@@ -87,6 +51,7 @@ const merchantSchema = mongoose.Schema({
   document: String,
   docUpload: String,
   token: String,
+  verifyToken: String,
   lastLogin: Number,
   device: [String],
   newDevice: { type: Boolean, default: 1 },
@@ -162,23 +127,48 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
             ? merchant.phone.toString().length === 13
               ? merchant.phone.toString().replace("2", "+2")
               : merchant.phone
-            : merchant.email;
+            : "";
           if (
             !merchant.verified ||
             merchant.newDevice ||
             Date.now() > merchant.lastLogin + newlogin
           ) {
-            //will verify with emial in case the user do not have a phone number
-            //check if its email before sending
-            twilio.twilioVerify(phone);
-            var updates = {
-              $set: { loginAttempt: 1, newDevice: true },
-              $unset: { lockUntil: 1 },
-            };
-            return merchant.update(updates, function (err) {
-              if (err) return cb(err);
-              return cb(null, merchant);
-            });
+            if (phone !== "") {
+              twilio.twilioVerify(phone);
+              var updates = {
+                $set: { loginAttempt: 1, newDevice: true },
+                $unset: { lockUntil: 1 },
+              };
+              return merchant.update(updates, function (err) {
+                if (err) return cb(err);
+                return cb(null, merchant);
+              });
+            } else {
+              // let lastLogin = merchant.lastLogin;
+              // let id = merchant._id;
+              // let emailCode1 = lastLogin.toString().slice(10, 12);
+              // let emailCode2 = id.toString().slice(20, 21);
+              // let emailCode3 = lastLogin.toString().slice(8, 9);
+              // let emailCode4 = id.toString().slice(22, 23);
+              // let emailCode5 = id.toString().slice(10, 11);
+              // let emailCode = `${emailCode1}${emailCode2}${emailCode3}${emailCode4}${emailCode5}`;
+              let token = random();
+              //send email
+              mail(merchant.email, merchant.fullname, "verify", token);
+              let updates = {
+                $set: {
+                  loginAttempt: 1,
+                  newDevice: true,
+                  verifyToken: token,
+                },
+                $unset: { lockUntil: 1 },
+              };
+              return merchant.update(updates, function (err) {
+                if (err) return cb(err);
+                return cb(null, merchant);
+              });
+              // });
+            }
           }
           var updates = {
             $set: { loginAttempt: 1, lastLogin: Date.now(), newDevice: false },
@@ -218,4 +208,4 @@ merchantSchema.statics.findToken = function (token, cb) {
   });
 };
 
-const merchantModel = mongoose.model("merchants", merchantSchema);
+mongoose.model("merchants", merchantSchema);
