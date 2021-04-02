@@ -36,14 +36,15 @@ module.exports = (api) => {
       return res.json("Invalid Parameter");
     let agent = userAgent.parse(req.headers["user-agent"]);
     let device = [];
+    let lastLogin = Date.now();
     device.push(agent.toString());
     const isEmail = emailCheck(email);
     let obj = {};
     if (isEmail) {
-      obj = { email, password, device, verifyToken: random() };
+      obj = { email, password, device, verifyToken: random(), lastLogin };
     } else {
       const phone = email.length === 11 ? email.replace("0", "+234") : email;
-      obj = { phone, password, device };
+      obj = { phone, password, device, lastLogin };
     }
     const merchant = new Merchant(obj);
     merchant.save((err, merchants) => {
@@ -51,10 +52,7 @@ module.exports = (api) => {
       if (merchant.email === undefined) {
         twilio.twilioVerify(obj.phone);
       } else {
-        //send email
-        console.log(merchant.verifyToken);
         mail(merchant.email, "", "verify", merchant.verifyToken);
-        console.log("email sent");
       }
       res.status(200).json({
         success: true,
@@ -333,7 +331,4 @@ module.exports = (api) => {
       );
     }
   );
-  api.get("/", (req, res) => {
-    console.log(mail("hi", "meto", "123", "verify", "123456"));
-  });
 };

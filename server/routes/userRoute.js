@@ -1,4 +1,3 @@
-//user routes comes here
 require("dotenv").config();
 const axios = require("axios");
 const mongoose = require("mongoose");
@@ -7,8 +6,13 @@ const SHA1 = require("crypto-js/sha1");
 const userAgent = require("useragent");
 
 const twilio = require("../utils/twilio");
+const random = require("../utils/random");
+const mail = require("../utils/mail/mail");
+const utilsFunction = require("../utils/utilsFunction");
 
 const User = mongoose.model("users");
+
+userAgent(true);
 
 module.exports = (api) => {
   //register route which accept bvn, email,date of birth and password
@@ -22,7 +26,11 @@ module.exports = (api) => {
       utilsFunction.checkBody(password)
     )
       return res.json("Invalid Parameter");
-
+    let token = random();
+    let agent = userAgent.parse(req.headers["user-agent"]);
+    let device = [];
+    device.push(agent.toString());
+    let lastLogin = Date.now();
     axios
       .get(`https://api.paystack.co/bank/resolve_bvn/${bvn}`, {
         headers: {
@@ -39,12 +47,20 @@ module.exports = (api) => {
             lastname: resp.data.data.last_name,
             phone,
             dob: resp.data.data.formatted_dob,
+            verifyToken: token,
+            device,
+            lastLogin,
           });
           data.save((err, user) => {
-            if (err) return res.status(401).send("Cant save user");
+            if (err) return res.json("Cant save user");
             try {
               twilio.twilioVerify(phone);
-              //user data has been successfully stored in db, the user should be expecting OTP
+              mail(
+                email,
+                `${user.lastname} ${user.firstname}`,
+                "verify",
+                token
+              );
               res.status(200).json({
                 user: {
                   name: `${user.lastname} ${user.firstname}`,
@@ -75,11 +91,13 @@ module.exports = (api) => {
 
   //accept user id as url  query params
   //this is the route that receive the otp verificationn from phone
-  ///api/verify?id=${id} url format
-  api.post("/api/user/verify", async (req, res) => {
+  ///api/verify?id=${id}&verify=${newDevice} url format
+  api.post("/api/user/verify", (req, res) => {
     if (
       utilsFunction.checkBody(req.body.code) ||
-      utilsFunction.checkBody(req.body.phone)
+      utilsFunction.checkBody(req.body.phone) ||
+      utilsFunction.checkBody(req.query.id) ||
+      utilsFunction.checkBody(req.query.verify)
     )
       return res.json("Invalid Parameter");
 
@@ -90,23 +108,86 @@ module.exports = (api) => {
         : req.body.phone;
     const id = req.query.id;
     const eapayId = SHA1(id).toString().substring(0, 6);
-    let verificationResult;
-    try {
-      verificationResult = await twilio.twilioChecks(code, phone);
-    } catch (e) {
-      return res.status(500).send(e);
-    }
-    if (verificationResult.status === "approved") {
-      User.findByIdAndUpdate(
-        { _id: id },
-        { verified: 1 },
-        { eapayId: eapayId },
-        { new: true },
-        (err) => {
-          if (err) return res.status(401).send(err);
-          return res.status(200).json({ success: true });
+    let verifylogin = 10 * 60 * 1000; //expires after 10 mins
+    User.findById({ _id: id }, async (err, user) => {
+      if (err) return res.json({ success: false, err });
+      if (code === user.verifyToken) {
+        if (user.lastLogin + verifylogin >= Date.now()) {
+          if (req.query.verify === "true") {
+            User.findByIdAndUpdate(
+              { _id: id },
+              {
+                $set: {
+                  lastLogin: Date.now(),
+                  verified: 1,
+                  eapayId: eapayId,
+                  verifyToken: "",
+                },
+                $push: { device: device },
+              },
+              { new: true },
+              (err) => {
+                if (err) return res.json(err);
+                return res.status(200).json({ success: true });
+              }
+            );
+          } else {
+            User.findByIdAndUpdate(
+              { _id: id },
+              {
+                $set: {
+                  lastLogin: Date.now(),
+                  verified: 1,
+                  eapayId: eapayId,
+                  verifyToken: "",
+                },
+              },
+              { new: true },
+              (err) => {
+                if (err) return res.json(err);
+                return res.status(200).json({ success: true });
+              }
+            );
+          }
+        } else {
+          return res.json({ success: false, msg: "Parameter Expired" });
         }
-      );
-    }
+      } else {
+        let verificationResult;
+        try {
+          verificationResult = await twilio.twilioChecks(code, phone);
+        } catch (e) {
+          return res.json(e);
+        }
+        if (verificationResult.status === "approved") {
+          if (req.query.verify === "true") {
+            User.findByIdAndUpdate(
+              { _id: id },
+              {
+                $set: { lastLogin: Date.now(), verified: 1, eapayId: eapayId },
+                $push: { device: device },
+              },
+              { new: true },
+              (err) => {
+                if (err) return res.json(err);
+                return res.status(200).json({ success: true });
+              }
+            );
+          } else {
+            User.findByIdAndUpdate(
+              { _id: id },
+              {
+                $set: { lastLogin: Date.now(), verified: 1, eapayId: eapayId },
+              },
+              { new: true },
+              (err) => {
+                if (err) return res.json(err);
+                return res.status(200).json({ success: true });
+              }
+            );
+          }
+        }
+      }
+    });
   });
 };
