@@ -144,16 +144,7 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
                 return cb(null, merchant);
               });
             } else {
-              // let lastLogin = merchant.lastLogin;
-              // let id = merchant._id;
-              // let emailCode1 = lastLogin.toString().slice(10, 12);
-              // let emailCode2 = id.toString().slice(20, 21);
-              // let emailCode3 = lastLogin.toString().slice(8, 9);
-              // let emailCode4 = id.toString().slice(22, 23);
-              // let emailCode5 = id.toString().slice(10, 11);
-              // let emailCode = `${emailCode1}${emailCode2}${emailCode3}${emailCode4}${emailCode5}`;
               let token = random();
-              //send email
               mail(merchant.email, merchant.fullname, "verify", token);
               let updates = {
                 $set: {
