@@ -13,6 +13,8 @@ const Merchant = mongoose.model("merchants");
 const emailCheck = require("../utils/checkEmail");
 const twilio = require("../utils/twilio");
 const utilsFunction = require("../utils/utilsFunction");
+const random = require("../utils/random");
+const mail = require("../utils/mail/mail");
 
 const merchantVerify = require("../middleware/merchantVerify");
 const updateMerchant = require("../middleware/updateMerchant");
@@ -38,7 +40,7 @@ module.exports = (api) => {
     const isEmail = emailCheck(email);
     let obj = {};
     if (isEmail) {
-      obj = { email, password, device };
+      obj = { email, password, device, verifyToken: random() };
     } else {
       const phone = email.length === 11 ? email.replace("0", "+234") : email;
       obj = { phone, password, device };
@@ -46,8 +48,13 @@ module.exports = (api) => {
     const merchant = new Merchant(obj);
     merchant.save((err, merchants) => {
       if (err) return res.json({ success: false, err });
-      if (obj.email === undefined) {
+      if (merchant.email === undefined) {
         twilio.twilioVerify(obj.phone);
+      } else {
+        //send email
+        console.log(merchant.verifyToken);
+        mail(merchant.email, "", "verify", merchant.verifyToken);
+        console.log("email sent");
       }
       res.status(200).json({
         success: true,
@@ -68,7 +75,7 @@ module.exports = (api) => {
 
   //accept merchant id as url  query params
   //this is the route that receive the otp verificationn from phone
-  ///api/merchant/verify?id=${id}&verify=${newDevice} url format
+  ///api/merchant/verify?id=${id}&verify=${newDevice}&type={phone||email} url format
   //$id=object id of the user and
   //$newDevice=device state of the user either true or false
   //it returns the updated verification, logn date and new device state of the user
@@ -77,48 +84,91 @@ module.exports = (api) => {
     const code = req.body.code;
     if (
       utilsFunction.checkBody(code) ||
-      utilsFunction.checkBody(req.body.phone) ||
+      utilsFunction.checkBody(req.query.type) ||
       utilsFunction.checkBody(req.query.id) ||
       utilsFunction.checkBody(req.query.verify)
     )
       return res.json("Invalid Parameter");
-    const phone =
-      req.body.phone.length === 11
-        ? req.body.phone.replace("0", "+234")
-        : req.body.phone;
-    const id = req.query.id;
-    let verificationResult;
-    try {
-      verificationResult = await twilio.twilioChecks(code, phone);
-    } catch (e) {
-      return res.json(e);
-    }
-    if (verificationResult.status === "approved") {
-      if (req.query.verify) {
-        Merchant.findByIdAndUpdate(
-          { _id: id },
-          {
-            $set: { verified: 1, lastLogin: Date.now() },
-          },
-          { new: true },
-          (err) => {
-            if (err) return res.json(err);
-            return res.status(200).json({ success: true });
+    let agent = userAgent.parse(req.headers["user-agent"]);
+    let device = agent.toString();
+    if (req.query.type === "email") {
+      Merchant.findById(req.query.id, (err, merchant) => {
+        if (err) return res.json("Invalid verification code");
+        let verifylogin = 10 * 60 * 1000; //after 10 mins
+        if (merchant.lastLogin + verifylogin >= Date.now()) {
+          if (code === merchant.verifyToken) {
+            if (req.query.verify === "false") {
+              Merchant.findByIdAndUpdate(
+                merchant._id,
+                {
+                  $set: { verified: 1, lastLogin: Date.now(), verifyToken: "" },
+                },
+                { new: true },
+                (err) => {
+                  if (err) return res.json(err);
+                  return res.status(200).json({ success: true });
+                }
+              );
+            } else {
+              Merchant.findByIdAndUpdate(
+                merchant._id,
+                {
+                  $set: { verified: 1, lastLogin: Date.now(), verifyToken: "" },
+                  $push: { device: device },
+                },
+                { new: true },
+                (err) => {
+                  if (err) return res.json(err);
+                  return res.status(200).json({ success: true });
+                }
+              );
+            }
+          } else {
+            return res.json({ success: false, msg: "Parameters mismatch" });
           }
-        );
-      } else {
-        Merchant.findByIdAndUpdate(
-          { _id: id },
-          {
-            $set: { verified: 1, lastLogin: Date.now() },
-            $push: { device: device },
-          },
-          { new: true },
-          (err) => {
-            if (err) return res.json(err);
-            return res.status(200).json({ success: true });
-          }
-        );
+        } else {
+          return res.json({ success: false, msg: "Parameter Expired" });
+        }
+      });
+    } else {
+      const phone =
+        req.body.phone.length === 11
+          ? req.body.phone.replace("0", "+234")
+          : req.body.phone;
+      const id = req.query.id;
+      let verificationResult;
+      try {
+        verificationResult = await twilio.twilioChecks(code, phone);
+      } catch (e) {
+        return res.json(e);
+      }
+      if (verificationResult.status === "approved") {
+        if (req.query.verify === "false") {
+          Merchant.findByIdAndUpdate(
+            { _id: id },
+            {
+              $set: { verified: 1, lastLogin: Date.now() },
+            },
+            { new: true },
+            (err) => {
+              if (err) return res.json(err);
+              return res.status(200).json({ success: true });
+            }
+          );
+        } else {
+          Merchant.findByIdAndUpdate(
+            { _id: id },
+            {
+              $set: { verified: 1, lastLogin: Date.now() },
+              $push: { device: device },
+            },
+            { new: true },
+            (err) => {
+              if (err) return res.json(err);
+              return res.status(200).json({ success: true });
+            }
+          );
+        }
       }
     }
   });
@@ -283,4 +333,7 @@ module.exports = (api) => {
       );
     }
   );
+  api.get("/", (req, res) => {
+    console.log(mail("hi", "meto", "123", "verify", "123456"));
+  });
 };
