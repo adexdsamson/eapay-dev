@@ -14,14 +14,14 @@ class LoginContainer extends Component {
 
   handleSubmit = async (values) => {
     const response = await this.props.onLogin(values);
-    if (response?.merchant?.newDevice === true) {
+    if(response?.data === undefined) {
+    } else if (response?.merchant?.newDevice === true) {
       this.props.history.push(VERIFICATION_ROUTE)
-    } else if (response.merchant.verified === false) {
+    } else if (response?.merchant?.verified === false) {
       this.props.history.push(VERIFICATION_ROUTE)
     } else {
       this.props.history.push(GET_STARTED_DASHBOARD_ROUTE)
     }
-    
   };
 
   render() {

@@ -32,4 +32,4 @@ export const phoneNumber = value =>
     ? 'Invalid phone number, must be 10 digits'
     : undefined
 
-export const validateNumEmail = value => isNaN(value) ? email : phoneNumber
+export const validateNumEmail = value => isNaN(value) ? email(value) : phoneNumber(value)

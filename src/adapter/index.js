@@ -1,5 +1,4 @@
 /* eslint-disable import/no-anonymous-default-export */
-import Axios from "axios";
 import { request } from '../utils/request'
 import {
   merchant_register,

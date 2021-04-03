@@ -14,7 +14,7 @@ class RegisterContainer extends Component {
 
   handleSubmit = async (values) => {
     const response = await this.props.onCreate(values);
-    if (response) await this.props.history.push(VERIFICATION_ROUTE);
+    if (response !== undefined) await this.props.history.push(VERIFICATION_ROUTE);
   };
 
   render() {

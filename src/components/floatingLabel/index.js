@@ -1,39 +1,26 @@
-import useStyles from "./style";
+import { TextField } from "@material-ui/core";
 
 const FloatingInput = ({
   type,
-  placeholder,
   label,
   name,
   input,
   className,
-  inputClassName,
-  inputContainerClassName,
   meta,
 }) => {
-  const classes = useStyles();
   return (
-    <div className={inputContainerClassName}>
-      <div className={`${classes.floatingLabelWrap}  ${className}`}>
-        <input
-          {...input}
-          type={type}
-          name={name}
-          className={`${classes.input}  ${inputClassName}`}
-          id={name}
-          placeholder={placeholder}
-        />
-        <label
-          htmlFor={name}
-          className={`${classes.label} ${meta.visited && input.value ? classes.active : ""}`}
-        >
-          {label}
-        </label>
-      </div>
-      {meta.touched &&
-        ((meta.error && <span className='text-danger'>{meta.error}</span>) ||
-          (meta.warning && <span className='text-warning'>{meta.warning}</span>))}
-    </div>
+    <TextField
+      {...input}
+      fullWidth
+      required
+      id={name}
+      type={type}
+      label={label}
+      className={className}
+      variant="filled"
+      error={meta.error}
+      helperText={meta.warning || meta.error}
+    />
   );
 };
 

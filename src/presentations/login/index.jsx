@@ -9,7 +9,7 @@ import { Slide } from "react-reveal";
 import { REGISTER_ROUTE, RESET_ROUTE } from "../../routes";
 import MediaQuery from "../../hooks/useMediaQuery";
 import Button from "../../components/button";
-import { maxLength6, email, phoneNumber, alphaNumeric, validateNumEmail } from '../../utils/formVaidation'; 
+import { validateNumEmail } from '../../utils/formVaidation'; 
 import Loader from "../../components/loader";
 import Notification from "../../components/notification";
 
@@ -48,13 +48,13 @@ const LoginPresentation = ({
                     {isMobile ? (
                       <img src={Logo} alt="logo" className="mb-4" />
                     ) : null}
-                    <h5 className={`mb-4 ${isMobile ? "text-center" : ""}`}>
+                    <h5 className={`mb-4 ${isMobile ? "text-center welcome-message" : ""}`}>
                       Welcome back, let start today’s business
                     </h5>
                     <Field
                       name="email"
                       type="text"
-                      label="Email or Phone"
+                      label="Email address or Phone number"
                       validate={validateNumEmail}
                       component={FloatingLabel}
                     />
@@ -62,7 +62,7 @@ const LoginPresentation = ({
                       name="password"
                       label="Password"
                       type="password"
-                      inputContainerClassName="mt-4"
+                      className="mt-4"
                       component={FloatingLabel}
                     />
                     <Row className="mt-3 align-items-center">
@@ -73,7 +73,7 @@ const LoginPresentation = ({
                           label="Login"
                         />
                       </Col>
-                      <Col className="mt-lg-0 mt-4">
+                      <Col className="mt-lg-0 mt-4 auth-links">
                         <Link to={REGISTER_ROUTE}>
                           <span className="text-dark">
                             I don’t have an account?{"   "}
@@ -82,7 +82,7 @@ const LoginPresentation = ({
                         </Link>
                       </Col>
                     </Row>
-                    <div className="mt-3">
+                    <div className="mt-3 auth-links">
                       <Link to={RESET_ROUTE}>Forgot password</Link>
                     </div>
                   </div>

@@ -8,6 +8,7 @@ import { Slide } from "react-reveal";
 import MediaQuery from "../../hooks/useMediaQuery";
 import Button from "../../components/button";
 import { LOGIN_ROUTE } from "../../routes";
+import { validateNumEmail } from '../../utils/formVaidation';
 import Loader from "../../components/loader";
 import Notification from "../../components/notification";
 
@@ -53,13 +54,14 @@ const RegisterPresentation = ({
                       name="email"
                       type="text"
                       label="Email or Phone"
+                      validate={validateNumEmail}
                       component={FloatingLabel}
                     />
                     <Field
                       name="password"
                       label="Password"
                       type="password"
-                      inputContainerClassName="mt-4"
+                      className="mt-4"
                       component={FloatingLabel}
                     />
                     <Row className="mt-3 align-items-center">
