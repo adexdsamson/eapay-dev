@@ -5,6 +5,22 @@ a:hover {
   text-decoration: none;
 }
 
+p{
+  color: rgba(129, 129, 129, 0.92)
+}
+
+.h-100vh {
+  height: 100vh;
+}
+
+.h-50vh {
+  height: 50vh;
+}
+
+.h-75vh {
+  height: 75vh;
+}
+
 .btn {
   padding: 11px 63px !important;
   border-radius: 9px;
@@ -21,6 +37,10 @@ a:hover {
 }
 
 .btn-primary-eapay {
+  background-color: #588ac5 !important;
+  color: white !important;
+}
+.btn-primary-eapay p {
   background-color: #588ac5 !important;
   color: white !important;
 }
