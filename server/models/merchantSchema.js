@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config;
+const { randomBytes } = require("crypto");
 
 const twilio = require("../utils/twilio");
 const random = require("../utils/random");
@@ -52,6 +53,8 @@ const merchantSchema = mongoose.Schema({
   docUpload: String,
   token: String,
   verifyToken: String,
+  resetPasswordToken: String,
+  resetPasswordTokenExp: String,
   lastLogin: Number,
   device: [String],
   newDevice: { type: Boolean, default: 1 },
@@ -83,6 +86,22 @@ merchantSchema.methods.comparePassword = function (merchantPassword, cb) {
   bcrypt.compare(merchantPassword, this.password, function (err, isMatch) {
     if (err) return cb(err);
     cb(null, isMatch);
+  });
+};
+
+merchantSchema.methods.generatePasswordToken = function (cb) {
+  var merchant = this;
+  randomBytes(256, (err, buffer) => {
+    if (err) return cb(err);
+    const token = buffer.toString("hex");
+    const timeNow = new Date();
+    const expTime = timeNow + 24 * 60 * 60 * 1000;
+    merchant.resetPasswordToken = token;
+    merchant.resetPasswordTokenExp = expTime;
+    merchant.save((err, merchant) => {
+      if (err) return cb(err);
+      return cb(null, merchant);
+    });
   });
 };
 
