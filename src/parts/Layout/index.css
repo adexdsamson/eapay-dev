@@ -12,7 +12,7 @@
 }
 .page-body {
   min-height: calc(100vh - 80px);
-  margin-left: 260px;
+  margin-left: 220px;
   position: relative;
   background-color: hsla(0,0%,96.5%,.6);
 }

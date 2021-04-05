@@ -2,6 +2,7 @@ import "./index.css";
 import PropTypes from "prop-types";
 import { Avatar } from "@material-ui/core";
 import { Bell, BellOutline, Menu } from "heroicons-react";
+import { Typography } from '@material-ui/core';
 
 const Header = ({
   title,
@@ -10,6 +11,7 @@ const Header = ({
   isMobile,
   isNotification,
   onMenu,
+  className
 }) => {
   const status = accountStatus ? (
     <p className="ml-3 mr-3 mb-0 text-success">live</p>
@@ -17,12 +19,12 @@ const Header = ({
     <p className="ml-3 mr-3 mb-0 text-danger">Test</p>
   );
   return (
-    <div className="page-header d-flex align-items-center justify-content-between">
+    <div className={`page-header d-flex align-items-center justify-content-between ${className}`}>
       <div className="d-flex align-items-center">
         {isMobile ? <Menu size={35} onClick={onMenu} /> : null}
-        <h4 className="mb-0 ml-2">{title}</h4>
+        <Typography variant='h4' className="mb-0">{title}</Typography>
       </div>
-      <div className="pr-4 d-flex align-items-center">
+      <div className=" d-flex align-items-center">
         {isMobile ? null : status}
         {isNotification ? (
           <Bell className="ml-3 mr-3 mb-0 text-eapay" />

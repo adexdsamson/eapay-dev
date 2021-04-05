@@ -2,6 +2,7 @@
 import "./index.css";
 import { Logo } from "../../Assets";
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Typography } from '@material-ui/core';
 import {
   DotsCircleHorizontalOutline,
   ViewGridAddOutline,
@@ -88,7 +89,7 @@ const Sidebar = ({ isMobile, user, location }) => {
     <aside className="sidebar position-relative">
       <div className="d-flex align-items-center">
         <img src={Logo} alt="eapays logo" />
-        <h4>Eapay</h4>
+        <Typography variant='h5'>Eapay</Typography>
       </div>
       <List className="list-menu" component="nav">
         {menus}

@@ -24,23 +24,23 @@ div.content-side h2 {
 }
 
 aside.sidebar {
-  width: 260px;
+  width: 220px;
   height: 100vh;
   border-radius: 0px 70px 0px 0px;
   background: #2c4563;
-  padding-left: 56px;
-  padding-top: 96px;
+  padding-left: 26px;
+  padding-top: 56px;
 }
 
 aside.sidebar img {
-  height: 51px;
-  width: 51px;
+  height: 31px;
+  width: 31px;
 }
-aside.sidebar h4 {
-  font-weight: 500;
+aside.sidebar h5 {
+  /* font-weight: 500;
   font-size: 36px;
   line-height: 42px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.02em; */
   margin-left: 8px;
   margin-bottom: 0;
   color: #ffffff;

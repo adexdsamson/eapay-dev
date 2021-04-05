@@ -1,7 +1,6 @@
 .page-header {
-  position: fixed;
   top: 20px;
-  width: calc(100% - 280px);
+
 }
 .page-header h4 {
   text-transform: capitalize;

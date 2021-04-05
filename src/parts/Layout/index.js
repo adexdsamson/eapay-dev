@@ -5,6 +5,7 @@ import { Fade } from "react-reveal";
 import { connect } from 'react-redux';
 import { getDrawerState } from "../../store/selector";
 import { drawer } from "../../store/actionTypes";
+import { Container } from "@material-ui/core";
 
 const Layout = ({ children, drawer, onDrawer }) => {
   const isMobile = useMediaQuery("down", "md");
@@ -23,10 +24,10 @@ const Layout = ({ children, drawer, onDrawer }) => {
             </Fade>
           ) : null}
         </div>
-        <div style={{ height: "100vh" }} className="page-body overflowY">
-          <div className="container">
+        <div style={{ height: "100vh", overflow: 'hidden'  }} className="page-body">
+          <Container container>
             {children}
-          </div>
+          </Container>
         </div>
       </div>
     </div>

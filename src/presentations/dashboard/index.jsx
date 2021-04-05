@@ -2,36 +2,44 @@ import { Fragment, useMemo } from "react";
 import Header from "../../parts/header";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import Table from "../../components/table";
+import { Typography, Grid } from "@material-ui/core";
 import {
   DoneAll,
   ErrorOutline,
   Cancel,
   TrendingUp,
   TrendingDown,
-  Visibility
+  Visibility,
 } from "@material-ui/icons";
-import { Cube } from 'heroicons-react';
+import { Cube } from "heroicons-react";
+import { convertToCurrency, convertToPercent } from "../../utils";
+import Product from '../../components/product/dashboardproduct'
 
 const StatusIcon = ({ value }) => {
   return value === "success" ? (
-    <DoneAll className="text-success" />
+    <DoneAll fontSize='small' className="text-success" />
   ) : value === "pending" ? (
-    <ErrorOutline className="text-warning" />
+    <ErrorOutline fontSize='small' className="text-warning" />
   ) : (
-    <Cancel className="text-danger" />
+    <Cancel fontSize='small' className="text-danger" />
   );
 };
 const Indicator = ({ isTrendingUp }) => {
   return (
     <div className="d-flex mt-4 align-items-center">
       <div className="d-flex p-2 btn-primary-eapay rounded align-items-center">
-        {isTrendingUp ? <TrendingUp /> : <TrendingDown />}
+        {isTrendingUp ? (
+          <TrendingUp fontSize="small" />
+        ) : (
+          <TrendingDown fontSize="small" />
+        )}
         <p className="ml-1 mb-0">12</p>
       </div>
-      <p className="ml-3 mb-0">vs last month</p>
+      <p className="ml-2 mb-0">vs last month</p>
     </div>
   );
 };
+
 
 const DashboardPresentation = ({ setDrawer, user }) => {
   const isMobile = useMediaQuery("down", "md");
@@ -84,46 +92,68 @@ const DashboardPresentation = ({ setDrawer, user }) => {
     <Fragment>
       <Header
         title="Dashboard"
+        className="mt-3"
         onMenu={setDrawer}
         isMobile={isMobile}
         avatarSrc={user?.avatar}
         mode={user?.mode}
         isNotification
       />
-      <div className="row mt-5 pt-5 mb-5">
-        <div className="col-lg-8">
-          <div className="h-50vh">
-            <h4>Channel</h4>
+      <Grid container className="mt-3 mb-5">
+        <Grid item lg={7} className="h-100vh overflowY">
+          <div className="">
+            <Typography variant="h6">Channels</Typography>
           </div>
-          <div className="h-50vh">
-            <h4 className="mb-5">Transactions</h4>
+          <div className=" pr-3">
+            <Typography variant="h6" className="mb-4">
+              Transactions
+            </Typography>
             <Table columns={columns} data={data} />
           </div>
-        </div>
-        <div className="col-lg-4">
-          <div>
-            <h4>Total Revenue</h4>
-            <h2>NGN 150,000</h2>
+        </Grid>
+        <Grid style={{ borderLeft: '1px solid rgba(0, 0, 0, 0.12)' }} item lg={5}>
+          <div className="ml-3">
+            <Typography variant="h6" className="mb-2">
+              Total Revenue
+            </Typography>
+            <Typography variant="h4">
+              {convertToCurrency("10000500000")}
+            </Typography>
             <Indicator />
             <div className="d-flex justify-content-between mt-4">
               <div>
-                <h6>Total viewed product</h6>
-                <div className='d-flex align-items-center'>
-                  <Visibility className='text-eapay' />
-                  <p className='ml-3 mb-0'>300</p>
+                <Typography variant="subtitle2">
+                  Total viewed product
+                </Typography>
+                <div className="d-flex align-items-center mt-2">
+                  <Visibility fontSize="small" className="text-eapay" />
+                  <Typography paragraph className="ml-3 mb-0">
+                    300
+                  </Typography>
                 </div>
               </div>
               <div>
-                <h6>Total product</h6>
-                <div className='d-flex align-items-center'>
-                  <Cube className='text-eapay' />
-                  <p className='ml-3 mb-0'>300</p>
+                <Typography variant="subtitle2">Total product</Typography>
+                <div className="d-flex align-items-center mt-2">
+                  <Cube fontSize="small" className="text-eapay" />
+                  <Typography paragraph className="ml-3 mb-0">
+                    300
+                  </Typography>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+          <div className="ml-3 mt-5">
+            <div className="d-flex align-items-center justify-content-between mb-4">
+              <Typography variant="h6" className="">
+                Products
+              </Typography>
+              <Typography variant="subtitle2">Sold</Typography>
+            </div>
+            <Product productName value={convertToPercent()} />
+          </div>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

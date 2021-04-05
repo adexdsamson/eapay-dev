@@ -6,15 +6,19 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "@material-ui/core";
+import theme from "./theme";
 
-import store from './store';
+import store from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Provider store={store} >
-        <App />
-      </Provider>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ThemeProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,29 +1,4 @@
-table {
-  width: 100%;
-}
 
 th[colspan="5"] {
   display: none;
-}
-th[role="columnheader"] {
-  color: rgba(0, 0, 0, 0.58);
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  padding-bottom: 20px;
-}
-
-thead {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.53);
-}
-
-tbody tr {
-  border-bottom: 1px solid #e5e5e5;
-}
-td {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  color: rgba(129, 129, 129, 0.92);
-  font-size: 16px;
-  line-height: 19px;
 }
