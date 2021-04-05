@@ -12,16 +12,16 @@ import {
   Visibility,
 } from "@material-ui/icons";
 import { Cube } from "heroicons-react";
-import { convertToCurrency, convertToPercent } from "../../utils";
-import Product from '../../components/product/dashboardproduct'
+import { convertToCurrency, getPercent } from "../../utils";
+import Product from "../../components/product/dashboardproduct";
 
 const StatusIcon = ({ value }) => {
   return value === "success" ? (
-    <DoneAll fontSize='small' className="text-success" />
+    <DoneAll fontSize="small" className="text-success" />
   ) : value === "pending" ? (
-    <ErrorOutline fontSize='small' className="text-warning" />
+    <ErrorOutline fontSize="small" className="text-warning" />
   ) : (
-    <Cancel fontSize='small' className="text-danger" />
+    <Cancel fontSize="small" className="text-danger" />
   );
 };
 const Indicator = ({ isTrendingUp }) => {
@@ -40,9 +40,28 @@ const Indicator = ({ isTrendingUp }) => {
   );
 };
 
-
-const DashboardPresentation = ({ setDrawer, user }) => {
+const DashboardPresentation = ({ setDrawer, user, product, transaction }) => {
   const isMobile = useMediaQuery("down", "md");
+  const productList = product.map((item) => (
+    <Product
+      productName={item.productName}
+      value={getPercent(item.sold, item.quantity)}
+    />
+  ));
+  const data = useMemo(
+    () => [
+      {
+        status: "pending", // Takes three params: success, pending, failed.
+        channel: "App", // Channel used to make payment to the merchant.
+        amount: "5000", // The amount paid to the merchant.
+        category: "Product", // Category of product paid for.
+        date: "09/07/2020", // The date the transaction was initialized.
+        customer: "Samuel Wolf", // The customer who authorized the payment.
+        reference: "Eri3903-djkvjnd", // Reference number of the transaction
+      },
+    ],
+    []
+  );
   const columns = useMemo(
     () => [
       {
@@ -74,20 +93,7 @@ const DashboardPresentation = ({ setDrawer, user }) => {
     ],
     []
   );
-  const data = useMemo(
-    () => [
-      {
-        status: "pending", // Takes three params: success, pending, failed.
-        channel: "App", // Channel used to make payment to the merchant.
-        amount: "5000", // The amount paid to the merchant.
-        category: "Product", // Category of product paid for.
-        date: "09/07/2020", // The date the transaction was initialized.
-        customer: "Samuel Wolf", // The customer who authorized the payment.
-        reference: "Eri3903-djkvjnd", // Reference number of the transaction
-      },
-    ],
-    []
-  );
+  
   return (
     <Fragment>
       <Header
@@ -111,7 +117,11 @@ const DashboardPresentation = ({ setDrawer, user }) => {
             <Table columns={columns} data={data} />
           </div>
         </Grid>
-        <Grid style={{ borderLeft: '1px solid rgba(0, 0, 0, 0.12)' }} item lg={5}>
+        <Grid
+          style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.12)" }}
+          item
+          lg={5}
+        >
           <div className="ml-3">
             <Typography variant="h6" className="mb-2">
               Total Revenue
@@ -150,7 +160,7 @@ const DashboardPresentation = ({ setDrawer, user }) => {
               </Typography>
               <Typography variant="subtitle2">Sold</Typography>
             </div>
-            <Product productName value={convertToPercent()} />
+            {productList}
           </div>
         </Grid>
       </Grid>
