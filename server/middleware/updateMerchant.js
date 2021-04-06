@@ -49,7 +49,6 @@ module.exports = (req, res, next) => {
           });
         }
       } else {
-        console.log("less");
         return res.json({
           isverify: false,
           verify: "Please Verify your account with the OTP sent to you",

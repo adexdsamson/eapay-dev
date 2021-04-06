@@ -133,6 +133,9 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
     if (merchant.isLocked) {
       return merchant.incLogin(function (err) {
         if (err) return cb(err);
+        if (merchant.email) {
+          mail(merchant.email, merchant.fullname, "check");
+        }
         return cb(null, null, 2); //  MAX_ATTEMPTS: 2,
       });
     }

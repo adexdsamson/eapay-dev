@@ -218,7 +218,6 @@ module.exports = (api) => {
         case reason.PASSWORD_INCORRECT:
           return res.json("Email or Password incorrect");
         case reason.MAX_ATTEMPTS:
-          mail(merchants.email, merchants.fullname, "check");
           return res.json("Check Email  for account notification");
       }
     });
