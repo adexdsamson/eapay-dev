@@ -11,9 +11,11 @@ import {
   TrendingDown,
   Visibility,
 } from "@material-ui/icons";
+import LoaderLabel from "../../components/loader/progressWithLabel";
 import { Cube } from "heroicons-react";
 import { convertToCurrency, getPercent } from "../../utils";
 import Product from "../../components/product/dashboardproduct";
+import Activity from '../../components/activity';
 
 const StatusIcon = ({ value }) => {
   return value === "success" ? (
@@ -24,18 +26,33 @@ const StatusIcon = ({ value }) => {
     <Cancel fontSize="small" className="text-danger" />
   );
 };
+
+/**
+ *
+ * @param {*} isTrendingUp
+ * @returns react component
+ */
+
 const Indicator = ({ isTrendingUp }) => {
   return (
-    <div className="d-flex mt-4 align-items-center">
-      <div className="d-flex p-2 btn-primary-eapay rounded align-items-center">
+    <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center">
         {isTrendingUp ? (
           <TrendingUp fontSize="small" />
         ) : (
           <TrendingDown fontSize="small" />
         )}
-        <p className="ml-1 mb-0">12</p>
+        <Typography
+          color="textSecondary"
+          variant="caption"
+          className="ml-1 mb-0"
+        >
+          12
+        </Typography>
       </div>
-      <p className="ml-2 mb-0">vs last month</p>
+      <Typography color="textSecondary" variant="caption" className="ml-1 mb-0">
+        vs last month
+      </Typography>
     </div>
   );
 };
@@ -93,7 +110,7 @@ const DashboardPresentation = ({ setDrawer, user, product, transaction }) => {
     ],
     []
   );
-  
+
   return (
     <Fragment>
       <Header
@@ -106,39 +123,58 @@ const DashboardPresentation = ({ setDrawer, user, product, transaction }) => {
         isNotification
       />
       <Grid container className="mt-3 mb-5">
-        <Grid item lg={7} className="h-100vh overflowY">
-          <div className="">
-            <Typography variant="h6">Channels</Typography>
+        <Grid item lg={8} className="h-100vh overflowY">
+          <div className="mr-3">
+            <div className="row">
+              <div className="col-lg-6 p-4 d-flex align-items-center justify-content-between">
+                <Typography variant="subtitle1">Success Rate</Typography>
+                <LoaderLabel size={60} value={20} />
+              </div>
+              <div className="col-lg-6 p-4 d-flex align-items-center justify-content-between">
+                <Typography variant="subtitle1">Sale Completed</Typography>
+                <LoaderLabel size={60} value={50} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-6 p-4 d-flex align-items-center justify-content-between">
+                <Typography variant="subtitle1">Store Interaction</Typography>
+                <LoaderLabel size={60} value={10} />
+              </div>
+              <div className="col-lg-6 p-4 d-flex align-items-center justify-content-between">
+                <Typography variant="subtitle1">Total Transactions</Typography>
+                <LoaderLabel size={60} value={70} />
+              </div>
+            </div>
           </div>
-          <div className=" pr-3">
-            <Typography variant="h6" className="mb-4">
-              Transactions
-            </Typography>
-            <Table columns={columns} data={data} />
+          <div>
+            <Activity data={[{}]} />
           </div>
         </Grid>
         <Grid
           style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.12)" }}
           item
-          lg={5}
+          lg={4}
         >
           <div className="ml-3">
-            <Typography variant="h6" className="mb-2">
-              Total Revenue
+            <div className="d-flex align-items-center justify-content-between mb-3">
+              <Typography variant="subtitle1" className="">
+                Total Revenue
+              </Typography>
+              <Indicator />
+            </div>
+            <Typography align="center" variant="h6">
+              {convertToCurrency("0")}
             </Typography>
-            <Typography variant="h4">
-              {convertToCurrency("10000500000")}
-            </Typography>
-            <Indicator />
-            <div className="d-flex justify-content-between mt-4">
+
+            <div className="d-flex justify-content-between mt-5">
               <div>
                 <Typography variant="subtitle2">
-                  Total viewed product
+                  Total product viewed
                 </Typography>
                 <div className="d-flex align-items-center mt-2">
                   <Visibility fontSize="small" className="text-eapay" />
                   <Typography paragraph className="ml-3 mb-0">
-                    300
+                    0
                   </Typography>
                 </div>
               </div>
@@ -147,7 +183,7 @@ const DashboardPresentation = ({ setDrawer, user, product, transaction }) => {
                 <div className="d-flex align-items-center mt-2">
                   <Cube fontSize="small" className="text-eapay" />
                   <Typography paragraph className="ml-3 mb-0">
-                    300
+                    0
                   </Typography>
                 </div>
               </div>
@@ -155,12 +191,21 @@ const DashboardPresentation = ({ setDrawer, user, product, transaction }) => {
           </div>
           <div className="ml-3 mt-5">
             <div className="d-flex align-items-center justify-content-between mb-4">
-              <Typography variant="h6" className="">
+              <Typography variant="subtitle1" className="">
                 Products
               </Typography>
               <Typography variant="subtitle2">Sold</Typography>
             </div>
-            {productList}
+            <div
+              style={{
+                overflowY: "scroll",
+                height: "50vh",
+                scrollbarWidth: "none",
+              }}
+              className="scrollbar-hide"
+            >
+              {productList}
+            </div>
           </div>
         </Grid>
       </Grid>

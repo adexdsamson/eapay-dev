@@ -29,6 +29,7 @@ const BorderLinearProgress = withStyles((theme) => ({
  * @param {value} The percentage of the product sold.
  * @returns react component
  */
+// TODO: only accept products that are activeand not sold out or archived
 
 const DashboardProduct = ({productName, value}) => {
   return (

@@ -1,8 +1,15 @@
 import "./index.css";
 import PropTypes from "prop-types";
-import { Avatar } from "@material-ui/core";
+import { Avatar, makeStyles } from "@material-ui/core";
 import { Bell, BellOutline, Menu } from "heroicons-react";
-import { Typography } from '@material-ui/core';
+import { Typography } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+}));
 
 const Header = ({
   title,
@@ -11,27 +18,36 @@ const Header = ({
   isMobile,
   isNotification,
   onMenu,
-  className
+  className,
 }) => {
+  const classes = useStyles();
   const status = accountStatus ? (
-    <p className="ml-3 mr-3 mb-0 text-success">live</p>
+    <Typography variant="caption" className="mb-0 text-success">
+      live mode
+    </Typography>
   ) : (
-    <p className="ml-3 mr-3 mb-0 text-danger">Test</p>
+    <Typography variant="caption" className=" mb-0 text-danger">
+      Test mode
+    </Typography>
   );
   return (
-    <div className={`page-header d-flex align-items-center justify-content-between ${className}`}>
+    <div
+      className={`page-header d-flex align-items-center justify-content-between ${className}`}
+    >
       <div className="d-flex align-items-center">
         {isMobile ? <Menu size={35} onClick={onMenu} /> : null}
-        <Typography variant='h4' className="mb-0">{title}</Typography>
+        <Typography variant="h6" className="mb-0">
+          {title}
+        </Typography>
       </div>
       <div className=" d-flex align-items-center">
         {isMobile ? null : status}
         {isNotification ? (
-          <Bell className="ml-3 mr-3 mb-0 text-eapay" />
+          <Bell size={20} className="ml-3 mr-3 mb-0 text-eapay" />
         ) : (
-          <BellOutline className="ml-3 mr-3 mb-0 text-muted" />
+          <BellOutline size={20} className="ml-3 mr-3 mb-0 text-muted" />
         )}
-        <Avatar src={avatarSrc} />
+        <Avatar className={classes.small} src={avatarSrc} />
       </div>
     </div>
   );

@@ -36,6 +36,10 @@ p{
   overflow-y: auto;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .btn-primary-eapay {
   background-color: #588ac5 !important;
   color: white !important;
