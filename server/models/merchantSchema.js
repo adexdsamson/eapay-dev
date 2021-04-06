@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config;
+const { randomBytes } = require("crypto");
 
 const twilio = require("../utils/twilio");
 const random = require("../utils/random");
@@ -52,6 +53,8 @@ const merchantSchema = mongoose.Schema({
   docUpload: String,
   token: String,
   verifyToken: String,
+  resetPasswordToken: String,
+  resetPasswordTokenExp: String,
   lastLogin: Number,
   device: [String],
   newDevice: { type: Boolean, default: 1 },
@@ -86,6 +89,22 @@ merchantSchema.methods.comparePassword = function (merchantPassword, cb) {
   });
 };
 
+merchantSchema.methods.generatePasswordToken = function (cb) {
+  var merchant = this;
+  randomBytes(256, (err, buffer) => {
+    if (err) return cb(err);
+    const token = buffer.toString("hex");
+    const timeNow = new Date();
+    const expTime = timeNow + 24 * 60 * 60 * 1000;
+    merchant.resetPasswordToken = token;
+    merchant.resetPasswordTokenExp = expTime;
+    merchant.save((err, merchant) => {
+      if (err) return cb(err);
+      return cb(null, merchant);
+    });
+  });
+};
+
 merchantSchema.statics.failedLogin = {
   NOT_FOUND: 0,
   PASSWORD_INCORRECT: 1,
@@ -114,6 +133,9 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
     if (merchant.isLocked) {
       return merchant.incLogin(function (err) {
         if (err) return cb(err);
+        if (merchant.email) {
+          mail(merchant.email, merchant.fullname, "check");
+        }
         return cb(null, null, 2); //  MAX_ATTEMPTS: 2,
       });
     }

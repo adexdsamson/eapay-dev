@@ -218,7 +218,6 @@ module.exports = (api) => {
         case reason.PASSWORD_INCORRECT:
           return res.json("Email or Password incorrect");
         case reason.MAX_ATTEMPTS:
-          //Email notification on account
           return res.json("Check Email  for account notification");
       }
     });
@@ -227,6 +226,66 @@ module.exports = (api) => {
   //this check the authentication and verification state of the merchant
   api.get("/api/merchant/auth", merchantVerify, updateMerchant, (req, res) => {
     res.status(200).json({ success: true, isMerchant: true });
+  });
+
+  //this send reset password for the merchant after after the merchant enters the email or phone and a reset password is sent to their email
+  api.post("/api/merchant/reset", (req, res) => {
+    const { email } = req.body;
+    if (utilsFunction.checkBody(email)) return res.json("Invalid Parameter");
+    const isEmail = emailCheck(email);
+    let obj = {};
+    if (isEmail) {
+      obj = { email };
+    } else {
+      const phone = email.length === 11 ? email.replace("0", "+234") : email;
+      obj = { phone };
+    }
+    Merchant.findOne(obj, (err, merchant) => {
+      if (!merchant) return res.json({ success: false, err });
+      if (merchant.email !== undefined) {
+        merchant.generatePasswordToken((err, merchant) => {
+          if (err) return res.json({ success: false, err });
+          mail(
+            merchant.email,
+            merchant.fullname,
+            "reset",
+            merchant.resetPasswordToken
+          );
+          return res.json({ success: true });
+        });
+      } else {
+        return res.json({
+          success: false,
+          msg: "You can't reset your password without an email",
+        });
+      }
+    });
+  });
+
+  //this route updates the merchant password with the token collected from the user email
+  //which is sent from the client as body
+  api.post("/api/merchant/reset_password", (req, res) => {
+    const { resetPasswordToken, password } = req.body;
+    if (
+      utilsFunction.checkBody(resetPasswordToken) ||
+      utilsFunction.checkBody(password)
+    )
+      return res.json("Invalid Parameter");
+    const timeNow = Date.now().toString();
+    Merchant.findOne({ resetPasswordToken }, (err, merchant) => {
+      if (!merchant) return res.json({ success: false, err: "Invalid token" });
+      if (timeNow <= merchant.resetPasswordTokenExp) {
+        merchant.password = password;
+        merchant.resetPasswordToken = "";
+        merchant.resetPasswordTokenExp = "";
+        merchant.save((err) => {
+          if (err) return res.json({ success: false, err });
+          return res.status(200).json({ success: true });
+        });
+      } else {
+        return res.json({ success: false, err: "Token expired" });
+      }
+    });
   });
 
   //route to upload the doc using cloudinary
