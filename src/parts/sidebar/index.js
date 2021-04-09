@@ -13,7 +13,7 @@ import {
 } from "heroicons-react";
 import { Storefront } from "@material-ui/icons";
 import { Link, withRouter } from "react-router-dom";
-import { GET_STARTED_DASHBOARD_ROUTE, DASHBOARD_ROUTE } from "../../routes";
+import { GET_STARTED_DASHBOARD_ROUTE, DASHBOARD_ROUTE, DASHBOARD_ECOMMERCE_ROUTE } from "../../routes";
 
 const sidebarMenu = [
   {
@@ -44,7 +44,7 @@ const sidebarMenu = [
     id: 5,
     icon: <ShoppingBag />,
     text: "E-commerce",
-    link: "",
+    link: DASHBOARD_ECOMMERCE_ROUTE,
   },
   {
     id: 6,

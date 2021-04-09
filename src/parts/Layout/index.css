@@ -40,7 +40,11 @@
 @media only screen and (min-width: 321px) and (max-width: 360px) {
   .page-sidebar {
     position: absolute;
-    width: 100%;
+    /* width: 100%; */
+    top: 20px;
+    left: 20px;
+    right: 290px;
+    bottom: 478;
   }
   .page-body {
     margin-left: 0px;
