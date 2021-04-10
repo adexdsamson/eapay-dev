@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
+
 import {
   Card,
   CardHeader,
@@ -11,11 +11,7 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,25 +36,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Cards({ title, subheader, avatar, image, body, link, alt }) {
+export default function Cards({
+  title,
+  subheader,
+  image,
+  body,
+  link,
+  alt,
+  user,
+}) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+          <Avatar
+            aria-label="recipe"
+            className={classes?.avatar}
+            src={user?.avater}
+          >
+            {user?.name}
           </Avatar>
         }
         title={title}
         subheader={subheader}
       />
-      <CardMedia
-        className={classes.media}
-        image={image}
-        title={alt}
-      />
+      <CardMedia className={classes.media} image={image} title={alt} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {body}
@@ -68,7 +72,6 @@ export default function Cards({ title, subheader, avatar, image, body, link, alt
         <IconButton onClick={link} aria-label="share">
           <ShareIcon />
         </IconButton>
-        
       </CardActions>
     </Card>
   );

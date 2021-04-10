@@ -9,7 +9,7 @@ import {
 
 const GetStarted = lazy(() => import("./containers/Dashboard/GetStarted.jsx"));
 const DashboardPage = lazy(() => import("./containers/Dashboard"));
-const Ecommerce = lazy(() => import("./containers/Dashboard/Ecommerce.jsx"));
+const Ecommerce = lazy(() => import("./containers/Dashboard/Shopfront.jsx"));
 
 const Dashboard = () => {
   return (

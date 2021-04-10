@@ -4,3 +4,7 @@ export const merchant_login = "/api/merchant/login";
 export const merchant_auth = "/api/merchant/auth";
 export const merchant_update_profile = "/api/merchant/profile";
 export const merchant_logout = "/api/merchant/logout";
+export const merchant_product = "/api/merchant/product/products";
+export const merchant_create_product = "/api/merchant/product/create";
+export const merchant_single_product = "/api/merchant/product"
+export const merchant_update_product = "/api/merchant/product/update"

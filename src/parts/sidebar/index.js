@@ -43,13 +43,13 @@ const sidebarMenu = [
   {
     id: 5,
     icon: <ShoppingBag />,
-    text: "E-commerce",
+    text: "Shopfront",
     link: DASHBOARD_ECOMMERCE_ROUTE,
   },
   {
     id: 6,
     icon: <Storefront />,
-    text: "Store",
+    text: "CheckOut",
     link: "",
   },
   {

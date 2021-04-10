@@ -5,6 +5,7 @@ import AirplaneIcon from './airplaneIcon.png';
 import Company from './company.png';
 import HomeIcon from './homeIcon.png';
 import Setup from './setup.png';
+import Empty from './empty.png';
 
 
 export {
@@ -14,5 +15,6 @@ export {
   AirplaneIcon,
   HomeIcon,
   Setup,
-  Company
+  Company,
+  Empty
 }

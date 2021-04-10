@@ -17,7 +17,6 @@ const FloatingInput = ({
       type={type}
       label={label}
       className={className}
-      variant="filled"
       error={meta.error}
       helperText={meta.warning || meta.error}
     />

@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
 import { reducer as form } from "redux-form";
 import { handleActions } from "redux-actions";
-import { user, isloading, notify, drawer } from "../actionTypes";
+import { user, isloading, notify, drawer, product } from "../actionTypes";
 
 const initialState = {
   user: null,
   isloading: false,
   notify: null,
-  drawer: false
+  drawer: false,
+  product: [],
 };
 
 const otherReducer = handleActions(
@@ -23,6 +24,9 @@ const otherReducer = handleActions(
     },
     [drawer]: (state, { payload }) => {
       return { ...state, drawer: payload };
+    },
+    [product]: (state, { payload }) => {
+      return { ...state, product: payload };
     },
   },
   initialState

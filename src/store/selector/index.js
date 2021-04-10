@@ -19,3 +19,7 @@ export const getUserState = createSelector(
   [otherReducer],
   (state) => state.user
 );
+export const getProductState = createSelector(
+  [otherReducer],
+  (state) => state.product
+);
