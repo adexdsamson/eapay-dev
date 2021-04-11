@@ -12,7 +12,7 @@ const GetStartedPresentation = ({ setDrawer, user }) => {
       {isMobile ? <Header onMenu={setDrawer} isMobile={isMobile} /> : null}
       <div className="d-flex flex-column align-items-center justify-content-center h-100">
         <Typography variant="h4" className="text-center">
-          Hi ShopTight, Welcome on board
+          Hi Alabian solutions, Welcome on board
         </Typography>
         <Typography variant='body2' className="text-center getStarted-p mt-2">
           You have the folowing task to complete before your customers begin to

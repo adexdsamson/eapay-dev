@@ -96,7 +96,7 @@ const Ecommerce = ({
 
         <Fab
           color="secondary"
-          size="medium"
+          size="small"
           component="span"
           aria-label="add"
           variant="extended"
@@ -105,11 +105,12 @@ const Ecommerce = ({
         </Fab>
       </label>
       <div className="mt-5 text-right">
-        <Button onClick={onCloseDrawer} className="text-danger" variant="text">
+        <Button size="small" onClick={onCloseDrawer} className="text-danger" variant="text">
           Close
         </Button>
         <Button
           type="submit"
+          size="small"
           className="ml-3"
           color="primary"
           variant="contained"
@@ -149,7 +150,7 @@ const Ecommerce = ({
       ) : (
         <Fragment>
           <Header
-            title="Dashboard"
+            title="Shopfront"
             className="mt-3"
             onMenu={setDrawer}
             isMobile={isMobile}
@@ -163,7 +164,7 @@ const Ecommerce = ({
             notify={notify}
           />
           <div className="d-flex justify-content-between w-100 mt-5 mb-3 mb-sm-0">
-            <Button color="secondary" variant="text">
+            <Button size="small" color="secondary" variant="text">
               filter
             </Button>
             <div>
@@ -171,12 +172,14 @@ const Ecommerce = ({
                 onClick={() => onOrder(ORDER_LIST)}
                 color="secondary"
                 variant="text"
+                size="small"
               >
                 order
               </Button>
               <Button
                 onClick={() => onNewProduct(CREATE_PRODUCT)}
                 color="primary"
+                size="small"
                 variant="contained"
                 className="ml-3"
               >

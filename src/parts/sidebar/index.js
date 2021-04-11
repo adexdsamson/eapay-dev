@@ -2,7 +2,7 @@
 import "./index.css";
 import { Logo } from "../../Assets";
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Typography } from '@material-ui/core';
+import { Typography } from "@material-ui/core";
 import {
   DotsCircleHorizontalOutline,
   ViewGridAddOutline,
@@ -13,7 +13,15 @@ import {
 } from "heroicons-react";
 import { Storefront } from "@material-ui/icons";
 import { Link, withRouter } from "react-router-dom";
-import { GET_STARTED_DASHBOARD_ROUTE, DASHBOARD_ROUTE, DASHBOARD_ECOMMERCE_ROUTE } from "../../routes";
+import {
+  GET_STARTED_DASHBOARD_ROUTE,
+  DASHBOARD_ROUTE,
+  DASHBOARD_ECOMMERCE_ROUTE,
+  DASHBOARD_BUSINESSTIPS_ROUTE,
+  DASHBOARD_TRANSACTION_ROUTE,
+  DASHBOARD_CUSTOMERS_ROUTE,
+  DASHBOARD_CHECKOUT_ROUTE
+} from "../../routes";
 
 const sidebarMenu = [
   {
@@ -32,13 +40,13 @@ const sidebarMenu = [
     id: 3,
     icon: <MenuAlt3 />,
     text: "Transactions",
-    link: "",
+    link: DASHBOARD_TRANSACTION_ROUTE,
   },
   {
     id: 4,
     icon: <UserGroupOutline />,
     text: "Customers",
-    link: "",
+    link: DASHBOARD_CUSTOMERS_ROUTE,
   },
   {
     id: 5,
@@ -50,13 +58,13 @@ const sidebarMenu = [
     id: 6,
     icon: <Storefront />,
     text: "CheckOut",
-    link: "",
+    link: DASHBOARD_CHECKOUT_ROUTE,
   },
   {
     id: 7,
     icon: <Bookmark />,
     text: "Business Tips",
-    link: "",
+    link: DASHBOARD_BUSINESSTIPS_ROUTE,
   },
 ];
 
@@ -89,7 +97,9 @@ const Sidebar = ({ isMobile, user, location }) => {
     <aside className="sidebar position-relative">
       <div className="d-flex align-items-center">
         <img src={Logo} alt="eapays logo" />
-        <Typography className='text-white ml-2' variant='h5'>Eapay</Typography>
+        <Typography className="text-white ml-2" variant="h5">
+          Eapay
+        </Typography>
       </div>
       <List className="list-menu" component="nav">
         {menus}
