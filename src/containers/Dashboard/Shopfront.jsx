@@ -14,7 +14,7 @@ class Ecommerce extends Component {
   state = { drawer: false, page: '' };
 
   componentDidMount() {
-    this.props.getProducts()
+    // this.props.getProducts(this.props.user.token)
   }
 
   /**
@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => {
     onDrawer: () => dispatch(drawer(true)),
     onCreate: (data) => dispatch(Adapter.createProduct(data)),
     onClose: () => dispatch(notify("")),
-    getProducts: () => dispatch(Adapter.getProducts()),
+    getProducts: (data) => dispatch(Adapter.getProducts(data)),
   };
 };
 

@@ -89,7 +89,7 @@ const Sidebar = ({ isMobile, user, location }) => {
     <aside className="sidebar position-relative">
       <div className="d-flex align-items-center">
         <img src={Logo} alt="eapays logo" />
-        <Typography variant='h5'>Eapay</Typography>
+        <Typography className='text-white ml-2' variant='h5'>Eapay</Typography>
       </div>
       <List className="list-menu" component="nav">
         {menus}

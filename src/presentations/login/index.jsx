@@ -1,5 +1,4 @@
 import { Container, Row, Col } from "react-bootstrap";
-import "./index.css";
 import { reduxForm, Field } from "redux-form";
 import { Logo } from "../../Assets";
 import Sidebar from "../../parts/sidebar/authSidebar";
@@ -8,10 +7,10 @@ import { Link } from "react-router-dom";
 import { Slide } from "react-reveal";
 import { REGISTER_ROUTE, RESET_ROUTE } from "../../routes";
 import MediaQuery from "../../hooks/useMediaQuery";
-import Button from "../../components/button";
-import { validateNumEmail } from '../../utils/formVaidation'; 
+import { validateNumEmail } from "../../utils/formVaidation";
 import Loader from "../../components/loader";
 import Notification from "../../components/notification";
+import { Typography, Button } from "@material-ui/core";
 
 const LoginPresentation = ({
   handleSubmit,
@@ -36,7 +35,7 @@ const LoginPresentation = ({
               <Sidebar />
             </Col>
           )}
-          <Col md={12} lg={8}>
+          <Col md={12} lg={7}>
             <Container className="d-flex flex-column justify-content-center h-100 ">
               <Slide right>
                 <form onSubmit={handleSubmit}>
@@ -48,9 +47,12 @@ const LoginPresentation = ({
                     {isMobile ? (
                       <img src={Logo} alt="logo" className="mb-4" />
                     ) : null}
-                    <h5 className={`mb-4 ${isMobile ? "text-center welcome-message" : ""}`}>
+                    <Typography
+                      variant="subtitle2"
+                      className={`mb-4 ${isMobile ? "text-center" : ""}`}
+                    >
                       Welcome back, let start today’s business
-                    </h5>
+                    </Typography>
                     <Field
                       name="email"
                       type="text"
@@ -68,22 +70,31 @@ const LoginPresentation = ({
                     <Row className="mt-3 align-items-center">
                       <Col md={5}>
                         <Button
-                          variant="primary"
+                          variant="contained"
+                          color='primary'
                           className="w-100"
-                          label="Login"
-                        />
+                          type='submit'
+                        >
+                          Login
+                        </Button>
                       </Col>
                       <Col className="mt-lg-0 mt-4 auth-links">
                         <Link to={REGISTER_ROUTE}>
-                          <span className="text-dark">
-                            I don’t have an account?{"   "}
-                          </span>
-                          Register
+                          <Typography color='primary' variant="subtitle2">
+                            <span className="text-dark">
+                              I don’t have an account?{"   "}
+                            </span>
+                            Register
+                          </Typography>
                         </Link>
                       </Col>
                     </Row>
-                    <div className="mt-3 auth-links">
-                      <Link to={RESET_ROUTE}>Forgot password</Link>
+                    <div className="mt-3">
+                      <Link to={RESET_ROUTE}>
+                        <Typography color="primary" variant="caption">
+                          Forgot password
+                        </Typography>
+                      </Link>
                     </div>
                   </div>
                 </form>

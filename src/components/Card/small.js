@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom"
+import { Button, Typography } from "@material-ui/core";
 import './small.css'
 
 
-const Card = ({ src, title, body}) => {
+const Card = ({ src, title, body, button}) => {
   return ( 
-    <div className='d-flex small-card p-3 justify-content-between align-items-center mt-3'>
-      <img src={src} alt='icon' />
+    <div className='d-flex mx-auto small-card p-3 justify-content-between align-items-center pt-3'>
+      <img classname='img-fluid' src={src} alt='icon' />
       <div className='ml-3'>
-        <h4>{title}</h4>
-        <p>{body}</p>
-        <Link to='/'>Continue</Link>
+        <Typography variant='subtitle1'>{title}</Typography>
+        <Typography variant='body2'>{body}</Typography>
+        <Button className='float-right' color='primary' variant='text'>{button}</Button>
       </div>
     </div>
    );

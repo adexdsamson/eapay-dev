@@ -76,7 +76,7 @@ export default {
   verifyUserAccount: (data, query) => async (dispatch) => {
     try {
       await dispatch(isloading(true));
-      const response = await request({
+      await request({
         url: merchant_verify,
         data: data,
         method: 'post',
@@ -126,12 +126,15 @@ export default {
     }
   },
 
-  getProducts: () => async dispatch => {
+  getProducts: (token) => async dispatch => {
     try {
       await dispatch(isloading(true));
       const response = await request({
         url: merchant_product,
         method: 'get',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       if (response.data?.success) {
         await dispatch(isloading(false));

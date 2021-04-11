@@ -5,10 +5,11 @@ import Sidebar from "../../parts/sidebar/authSidebar";
 import FloatingLabel from "../../components/floatingLabel";
 import { Slide } from "react-reveal";
 import MediaQuery from "../../hooks/useMediaQuery";
-import Button from "../../components/button";
+// import Button from "../../components/button";
 import Notification from "../../components/notification";
 import Loader from "../../components/loader";
 import { maxLength6, minLength6 } from '../../utils/formVaidation';
+import { Typography, Button } from "@material-ui/core";
 
 const VerificationPresentation = ({
   handleSubmit,
@@ -35,7 +36,7 @@ const VerificationPresentation = ({
               <Sidebar />
             </Col>
           )}
-          <Col md={12} lg={8}>
+          <Col md={12} lg={7}>
             <Container className="d-flex flex-column justify-content-center h-100 ">
               <Slide right>
                 <form onSubmit={handleSubmit}>
@@ -47,10 +48,10 @@ const VerificationPresentation = ({
                     {isMobile ? (
                       <img src={Logo} alt="logo" className="mb-4" />
                     ) : null}
-                    <h5 className={`mb-4 ${isMobile ? "text-center" : ""}`}>
+                    <Typography variant='subtitle2' className={`mb-4 ${isMobile ? "text-center" : ""}`}>
                       A verification code is sent to either your email address
                       or phone number
-                    </h5>
+                    </Typography>
                     <Field
                       name="code"
                       type="number"
@@ -63,11 +64,14 @@ const VerificationPresentation = ({
                     <Row className="mt-3 align-items-center">
                       <Col md={5}>
                         <Button
-                          variant="primary"
+                          variant="contained"
+                          color='primary'
                           className="w-100"
-                          label="Verify"
+                          type='submit'
                           disabled={submitting}
-                        />
+                        >
+                          Verify
+                        </Button>
                       </Col>
                       <Col className="mt-lg-0 mt-4"></Col>
                     </Row>

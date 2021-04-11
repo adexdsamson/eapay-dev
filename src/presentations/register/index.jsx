@@ -6,11 +6,11 @@ import FloatingLabel from "../../components/floatingLabel";
 import { Link } from "react-router-dom";
 import { Slide } from "react-reveal";
 import MediaQuery from "../../hooks/useMediaQuery";
-import Button from "../../components/button";
 import { LOGIN_ROUTE } from "../../routes";
-import { validateNumEmail } from '../../utils/formVaidation';
+import { validateNumEmail } from "../../utils/formVaidation";
 import Loader from "../../components/loader";
 import Notification from "../../components/notification";
+import { Typography, Button } from "@material-ui/core";
 
 const RegisterPresentation = ({
   handleSubmit,
@@ -35,8 +35,8 @@ const RegisterPresentation = ({
               <Sidebar />
             </Col>
           )}
-          <Col md={12} lg={8}>
-            <Container className="d-flex flex-column justify-content-center h-100 ">
+          <Col md={12} lg={7}>
+            <Container className="d-flex flex-column justify-content-center h-100">
               <Slide right>
                 <form onSubmit={handleSubmit}>
                   <div
@@ -47,9 +47,12 @@ const RegisterPresentation = ({
                     {isMobile ? (
                       <img src={Logo} alt="logo" className="mb-4" />
                     ) : null}
-                    <h5 className={`mb-4 ${isMobile ? "text-center" : ""}`}>
+                    <Typography
+                      variant="subtitle2"
+                      className={`mb-4 ${isMobile ? "text-center" : ""}`}
+                    >
                       Welcome to Eapay, let’s build your business together
-                    </h5>
+                    </Typography>
                     <Field
                       name="email"
                       type="text"
@@ -67,17 +70,22 @@ const RegisterPresentation = ({
                     <Row className="mt-3 align-items-center">
                       <Col md={5}>
                         <Button
-                          variant="primary"
+                          variant="contained"
+                          color='primary'
                           className="w-100"
-                          label="Register"
-                        />
+                          type='submit'
+                        >
+                          Register
+                        </Button>
                       </Col>
                       <Col className="mt-lg-0 mt-4">
                         <Link to={LOGIN_ROUTE}>
-                          <span className="text-dark">
-                            Aleady have an account?{"   "}
-                          </span>
-                          click here
+                          <Typography color='primary' variant="subtitle2">
+                            <span className="text-dark">
+                              Aleady have an account?{"   "}
+                            </span>
+                            Login
+                          </Typography>
                         </Link>
                       </Col>
                     </Row>

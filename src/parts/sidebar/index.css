@@ -10,19 +10,6 @@
   width: 40px;
 }
 
-
-div.content-side p {
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 21px;
-  color: white;
-}
-
-div.content-side h2 {
-  font-weight: bold;
-  font-size: 36px;
-}
-
 aside.sidebar {
   width: 220px;
   height: 100vh;
@@ -35,15 +22,6 @@ aside.sidebar {
 aside.sidebar img {
   height: 31px;
   width: 31px;
-}
-aside.sidebar h5 {
-  /* font-weight: 500;
-  font-size: 36px;
-  line-height: 42px;
-  letter-spacing: 0.02em; */
-  margin-left: 8px;
-  margin-bottom: 0;
-  color: #ffffff;
 }
 
 .bottom {

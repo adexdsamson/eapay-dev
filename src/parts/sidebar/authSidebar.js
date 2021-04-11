@@ -4,6 +4,7 @@ import { Slide } from "react-reveal";
 import "./index.css";
 import { Link } from "react-router-dom";
 import { LOGIN_ROUTE } from "../../routes";
+import { Typography } from "@material-ui/core";
 
 const AuthSidebar = () => {
   return (
@@ -14,10 +15,10 @@ const AuthSidebar = () => {
         </Link>
         <div className="content-side d-flex flex-column align-items-center justify-content-center h-100">
           <img src={Frame10} alt="phone purchase" className="w-50" />
-          <h2 className="text-center py-3">Merchant</h2>
-          <p className="auth-side-text text-center">
+          <Typography variant='h6' className="text-center pt-2">Merchant</Typography>
+          <Typography variant='body2' className="text-center">
             Help you and your customer experience seamless payment transactions; get payment in more ways, easy delivery and tax audit
-          </p>
+          </Typography>
         </div>
       </Slide>
     </Container>

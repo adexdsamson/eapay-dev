@@ -25,7 +25,7 @@ const Layout = ({ children, drawer, onDrawer }) => {
           ) : null}
         </div>
         <div style={{ height: "100vh", overflow: 'hidden'  }} className="page-body">
-          <Container container>
+          <Container className='h-100' container>
             {children}
           </Container>
         </div>

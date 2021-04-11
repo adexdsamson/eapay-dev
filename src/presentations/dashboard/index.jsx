@@ -1,7 +1,7 @@
 import { Fragment, useMemo } from "react";
 import Header from "../../parts/header";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import Table from "../../components/table";
+// import Table from "../../components/table";
 import { Typography, Grid } from "@material-ui/core";
 import {
   DoneAll,
