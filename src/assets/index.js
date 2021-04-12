@@ -12,7 +12,7 @@ import circle4 from "./circle4.png";
 import circle5 from "./circle5.png";
 import circle6 from "./circle6.png";
 import chat from "./chatbuble.png";
-
+import LogoGif from './logo.gif';
 import qr from './qr.png'
 
 import blackCircle from './blackCircle.png';
@@ -35,5 +35,6 @@ export {
   chat,
   blackCircle,
   qr,
-  StoreLap
+  StoreLap,
+  LogoGif,
 };

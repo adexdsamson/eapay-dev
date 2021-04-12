@@ -1,11 +1,12 @@
-import { Spinner } from "react-bootstrap";
+import { Container } from 'react-bootstrap';
+import { LogoGif } from '../../Assets';
 
 const Loader = () => {
-  return (
-    <Spinner animation="border" role="status">
-      <span className="sr-only">Loading...</span>
-    </Spinner>
-  );
-};
-
+  return ( 
+    <Container style={{ height: '100vh' }} className='d-flex align-items-center justify-content-center'>
+      <img src={LogoGif} width={50} height={50} alt='logo gif' />
+    </Container>
+   );
+}
+ 
 export default Loader;
