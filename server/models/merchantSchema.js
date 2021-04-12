@@ -167,7 +167,7 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
               });
             } else {
               let token = random();
-              mail(merchant.email, merchant.fullname, "verify", token);
+              mail(merchant.email, merchant.fullname, "verify", token, );
               let updates = {
                 $set: {
                   loginAttempt: 1,
@@ -180,7 +180,6 @@ merchantSchema.statics.loginMerchant = function (obj, password, device, cb) {
                 if (err) return cb(err);
                 return cb(null, merchant);
               });
-              // });
             }
           }
           var updates = {

@@ -228,6 +228,24 @@ module.exports = (api) => {
     res.status(200).json({ success: true, isMerchant: true });
   });
 
+  api.get("/api/merchant/resend_verify", merchantVerify, (req, res) => {
+    Merchant.findById({ _id: req.merchant._id }, (err, merchant) => {
+      if (!merchant) return res.json({ success: false, err });
+      if (merchant.phone !== "") {
+        let phone =
+          merchant.phone.toString().length === 13
+            ? merchant.phone.toString().replace("2", "+2")
+            : merchant.phone;
+        twilio.twilioVerify(phone);
+        res.status(200).json({ success: true });
+      } else {
+        let token = random();
+        mail(merchant.email, merchant.fullname, "verify", token);
+        res.status(200).json({ success: true });
+      }
+    });
+  });
+
   //this send reset password for the merchant after after the merchant enters the email or phone and a reset password is sent to their email
   api.post("/api/merchant/reset", (req, res) => {
     const { email } = req.body;
@@ -238,7 +256,7 @@ module.exports = (api) => {
       obj = { email };
     } else {
       const phone = email.length === 11 ? email.replace("0", "+234") : email;
-      obj = { phone };
+      obj = { phone };resend_verify
     }
     Merchant.findOne(obj, (err, merchant) => {
       if (!merchant) return res.json({ success: false, err });
@@ -262,7 +280,7 @@ module.exports = (api) => {
     });
   });
 
-  //this route updates the merchant password with the token collected from the user email
+  //this route updates the merchant password with the token collected from the merchant email
   //which is sent from the client as body
   api.post("/api/merchant/reset_password", (req, res) => {
     const { resetPasswordToken, password } = req.body;
@@ -302,7 +320,7 @@ module.exports = (api) => {
       cloudinary.uploader.upload(req.files.file.path, (err, result) => {
         if (err) return res.json(err);
         Merchant.findByIdAndUpdate(
-          { _id: req.user._id },
+          { _id: req.merchant._id },
           { docUpload: result.url },
           { new: true },
           (err, doc) => {
@@ -345,7 +363,7 @@ module.exports = (api) => {
           QRCode.toDataURL(qrImg, function (err, url) {
             //access the qrcode with <img src=qrcodeurl />
             Merchant.findByIdAndUpdate(
-              { _id: req.user._id },
+              { _id: req.merchant._id },
               { $set: req.body, qrcodeUrl: url },
               { new: true },
               (err, merchants) => {
@@ -375,19 +393,14 @@ module.exports = (api) => {
   );
 
   //on success log the user outand reset token
-  api.get(
-    "/api/merchant/logout",
-    merchantVerify,
-    updateMerchant,
-    (req, res) => {
-      Merchant.findByIdAndUpdate(
-        { _id: req.user._id },
-        { token: "" },
-        (err) => {
-          if (err) return res.json(err);
-          return res.status(200).json({ success: true });
-        }
-      );
-    }
-  );
+  api.get("/api/merchant/logout", merchantVerify, (req, res) => {
+    Merchant.findByIdAndUpdate(
+      { _id: req.merchant._id },
+      { token: "" },
+      (err) => {
+        if (err) return res.json(err);
+        return res.status(200).json({ success: true });
+      }
+    );
+  });
 };
