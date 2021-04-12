@@ -44,7 +44,7 @@ module.exports = (api) => {
         if (err) return res.json(err);
         const productCreate = new Products({
           product_image: result.url,
-          merchant: req.user._id,
+          merchant: req.merchant._id,
           product_name,
           product_quantity,
           product_desc,
@@ -66,7 +66,7 @@ module.exports = (api) => {
     merchantVerify,
     updateMerchant,
     (req, res) => {
-      Products.find({ merchant: req.user._id }).exec((err, product) => {
+      Products.find({ merchant: req.merchant._id }).exec((err, product) => {
         if (err) return res.json({ success: false });
         return res.status(200).json({ success: true, product });
       });
@@ -85,8 +85,14 @@ module.exports = (api) => {
       Products.findOne({ _id: productId }).exec((err, product) => {
         if (product === null)
           return res.json({ success: false, message: "Can't find product" });
-        console.log(url);
-        return res.status(200).json({ success: true, product });
+        const productUrl = url.split("/");
+        return res
+          .status(200)
+          .json({
+            success: true,
+            product,
+            url: `/api/${productUrl[3]}`,
+          });
       });
     }
   );
@@ -103,7 +109,7 @@ module.exports = (api) => {
         cloudinary.uploader.upload(req.files.file.path, (err, result) => {
           if (err) return res.json(err);
           Products.findOneAndUpdate(
-            { merchant: req.user._id, _id: productId },
+            { merchant: req.merchant._id, _id: productId },
             { $set: { product_image: result } },
             (err) => {
               if (err) return res.json({ success: false });
@@ -112,7 +118,7 @@ module.exports = (api) => {
         });
       }
       Products.findOneAndUpdate(
-        { merchant: req.user._id, _id: productId },
+        { merchant: req.merchant._id, _id: productId },
         { $set: req.body },
         { new: true },
         (err, product) => {
@@ -122,6 +128,7 @@ module.exports = (api) => {
       );
     }
   );
+
   //single product view by everyone
   // /api/product?productId={productId}
   api.get("/api/product", (req, res) => {

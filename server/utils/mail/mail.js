@@ -20,7 +20,6 @@ module.exports = (to, name, template, data) => {
   const transporter = mailer.createTransport(transport);
 
   transporter.sendMail(emailData(to, name, template, data), (err) => {
-    if (err) return console.log("error");
     transporter.close();
   });
 };
