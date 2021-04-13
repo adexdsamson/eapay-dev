@@ -14,7 +14,7 @@ class Ecommerce extends Component {
   state = { drawer: false, page: '' };
 
   componentDidMount() {
-    // this.props.getProducts(this.props.user.token)
+   // this.props.getProducts(this.props.user.token)
   }
 
   /**
