@@ -14,7 +14,7 @@ const cookieParser = require("cookie-parser");
 const AdminBro = require('admin-bro');
 const options = require('./middleware/admn.options');
 const buildAdminRouter = require('./routes/admin.router');
-
+const { nibss } = require('innovation-sandbox');
 
 
 require("./models/userSchema.js");
@@ -34,7 +34,25 @@ landingPage.use(express.static(path.join(__dirname, "views/index/build")));
 mobile.use(express.static(path.join(__dirname, "views/mobile")));
 merchant.use(express.static(path.join(__dirname, "views/merchant")));
 
-
+nibss.Bvnr.Reset({
+  sandbox_key: '123a2dbfba3933cbe18517ff56eb5a79',
+  organisation_code: '11111'
+}).then(response => {
+  //do something with the response here
+  console.log({response})
+  nibss.Bvnr.GetSingleBVN({
+    bvn: '‭22307504869',
+    sandbox_key: '123a2dbfba3933cbe18517ff56eb5a79',
+    organisation_code: '11111',
+    password: response.password,
+    ivkey: response.ivkey,
+    aes_key: response.aes_key,
+    host: 'https://sandboxapi.fsi.ng'
+  }).then(res => {
+    //do something
+    console.log({res})
+  });
+});
 // View route
 landingPage.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "views/index", "index.html"));
