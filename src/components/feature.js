@@ -1,5 +1,6 @@
 import { Col, Row } from "react-bootstrap";
-import { blackCircle } from "../assets";
+import { Typography } from "@material-ui/core";
+import { blackCircle } from "../Assets";
 import Badge from "./comingSoon";
 import { Fade, Zoom } from "react-reveal";
 
@@ -8,8 +9,10 @@ const Feature = ({ src, alt, reverse, title, body }) => {
     <>
       <Col className="" md={6}>
         <Fade left>
-          <h2 className="feature-title mb-3">{title}</h2>
-          <p className="feature-paragraph mb-4"> {body} </p>
+          <Typography variant="h3" className="mb-3 text-capitalize">
+            {title}
+          </Typography>
+          <Typography variant='body1' className="mb-4"> {body} </Typography>
           <Badge label="coming soon" />
         </Fade>
       </Col>
@@ -43,8 +46,10 @@ const Feature = ({ src, alt, reverse, title, body }) => {
           </Col>
           <Col md={6}>
             <Fade right>
-              <h2 className="feature-title mb-3">{title}</h2>
-              <p className="feature-paragraph mb-4"> {body} </p>
+              <Typography variant="h3" className="mb-3 text-capitalize">
+                {title}
+              </Typography>
+              <Typography variant='body1' className="mb-4"> {body} </Typography>
               <Badge label="coming soon" />
             </Fade>
           </Col>

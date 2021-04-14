@@ -1,10 +1,8 @@
-import { Badge } from 'react-bootstrap'
+import { Chip } from '@material-ui/core';
 
 const ComingSoon = ({ label }) => {
   return (
-    <Badge pill variant="primary-eapay text-uppercase">
-      {label}
-    </Badge>
+    <Chip size="medium" label={label} color='primary' />
   )
 }
 

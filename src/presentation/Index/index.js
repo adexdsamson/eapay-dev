@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Store as img } from "../../assets";
+import { Store as img } from "../../Assets/index";
 import Header from "./component/header";
 import PaymentFeature from "./component/payment";
 import Ecommerce from "./component/ecommerce";
@@ -35,8 +35,8 @@ const IndexPage = ({ inputValue, onChange }) => {
           <PaymentFeature />
         </Container>
       </section>
-      <section className="header-container container-section">
-        <Container className='h-100'>
+      <section style={{ padding: '1rem'}} className="header-container ">
+        <Container className='h-100 container-section'>
           <Ecommerce />
         </Container>
       </section>
@@ -45,8 +45,8 @@ const IndexPage = ({ inputValue, onChange }) => {
           <Logistics />
         </Container>
       </section>
-      <section className="header-container container-section">
-        <Container className='h-100'>
+      <section style={{ padding: '1rem'}} className="header-container ">
+        <Container className='h-100 container-section'>
           <Store
             title="NO POS, NO WAHALA"
             body="Online platform that lets you accept payment through debit and credit cards in-person without POS."
@@ -66,8 +66,8 @@ const IndexPage = ({ inputValue, onChange }) => {
           />
         </Container>
       </section>
-      <section className="header-container container-section">
-        <Container className='h-100'>
+      <section style={{ padding: '1rem'}} className="header-container ">
+        <Container className='h-100 container-section'>
           <BussinesTips />
         </Container>
       </section>

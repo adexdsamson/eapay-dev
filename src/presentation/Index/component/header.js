@@ -7,13 +7,16 @@ import {
   circle4,
   circle5,
   circle6,
-} from "../../../assets";
+} from "../../../Assets";
 import Navbar from "../../../components/navbar";
 import Badge from "../../../components/comingSoon";
 import Input from "../../../components/floatingInput";
 import { Fade, Zoom } from "react-reveal";
+import { Typography } from "@material-ui/core";
+import { useMediaQueries } from "../../../HOC/useMediaQuery";
 
 const IndexPage = () => {
+  const isMobile = useMediaQueries(0, 960);
   return (
     <header id="home" className="pt-3">
       <Navbar />
@@ -23,11 +26,11 @@ const IndexPage = () => {
             <div className="mb-3">
               <Badge label="Coming soon" />
             </div>
-            <h1 className="header-title">More in one payment platform</h1>
-            <p className="header-paragraph">
+            <Typography variant={isMobile ? 'h4' :'h2'} className="text-capitalize mb-2">More in one payment platform</Typography>
+            <Typography variant='body1' className="">
               Help vendors and customers experience seamless transactions; get
               payment in more ways, easy delivery and tax audit.
-            </p>
+            </Typography>
             <Input />
           </Fade>
         </Col>

@@ -14,7 +14,8 @@ import circle6 from "./circle6.png";
 import chat from "./chatbuble.png";
 import LogoGif from './logo.gif';
 import qr from './qr.png'
-
+import Whoweare from './whoweare.jpg';
+import Passion from './passion.jpg';
 import blackCircle from './blackCircle.png';
 
 import StoreLap from './store-lap.png'
@@ -37,4 +38,6 @@ export {
   qr,
   StoreLap,
   LogoGif,
+  Whoweare,
+  Passion
 };

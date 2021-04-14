@@ -1,10 +1,11 @@
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { Logo } from "../../assets";
+import { Logo } from "../../Assets";
+import {withRouter} from 'react-router-dom'
 
-const Navigation = () => {
+const Navigation = ({ location }) => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="transparent" variant="light">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         <img
           alt=""
           src={Logo}
@@ -18,9 +19,9 @@ const Navigation = () => {
         className="justify-content-end"
         id="responsive-navbar-nav"
       >
-        <Nav activeKey="/home">
+        <Nav activeKey={location.pathname}>
           <Nav.Item>
-            <Nav.Link href="#">About Eapay</Nav.Link>
+            <Nav.Link href="/about">About Eapay</Nav.Link>
           </Nav.Item>
         </Nav>
         <Button disabled variant="outline-primary-eapay">Coming Soon</Button>
@@ -29,4 +30,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default withRouter(Navigation);
