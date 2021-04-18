@@ -68,15 +68,15 @@ header {
 
 .circle1 {
   position: absolute;
-  width: 260px;
-  left: 50px;
+  width: 100%;
+  left: -32px;
   top: -254px;
   animation: Circle1 2s linear;
 }
 .circle2 {
   position: absolute;
-  width: 225px;
-  left: 300px;
+  width: 100%;
+  left: 30px;
   top: -27px;
   animation: Circle2 2s linear;
 }

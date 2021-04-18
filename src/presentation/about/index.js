@@ -7,7 +7,8 @@ import { useN01TextInfoContentStyles } from "@mui-treasury/styles/textInfoConten
 import Footer from "../../components/footer";
 import useMediaQuery from "../../HOC/useMediaQuery";
 import { Fade, Zoom } from "react-reveal";
-import {Whoweare, Passion} from '../../Assets';
+import { Whoweare, Passion } from "../../Assets";
+import Card from "../../components/card";
 
 const About = () => {
   const isMobile = useMediaQuery("down", "md");
@@ -46,8 +47,16 @@ const About = () => {
         </Container>
       </div>
       <Container>
-        <section style={{ height: "100%", marginTop: '8rem', marginBottom: '6rem' }} className="">
-          <Grid container direction='row-reverse' className="align-items-center h-100" spacing={isMobile ? 1 : 9}>
+        <section
+          style={{ height: "100%", marginTop: "8rem", marginBottom: "6rem" }}
+          className=""
+        >
+          <Grid
+            container
+            direction="row-reverse"
+            className="align-items-center h-100"
+            spacing={isMobile ? 1 : 9}
+          >
             <Grid item md={6}>
               <Fade right>
                 <Typography variant="h4" className="mb-2 text-capitalize">
@@ -65,22 +74,32 @@ const About = () => {
                   variant="body1"
                   className={isMobile ? "mb-3" : "mb-3 w-75"}
                 >
-                  Eapay is a technology built to help businesses grow from
+                  Eapay is a technology designed to help businesses grow from
                   small, medium, to large enterprise, it’s built to help
                   business handle dispatch riders, inventory management system,
                   business content and tax audit.
                 </Typography>
               </Fade>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={6} className='w-100'>
               <Zoom>
-                <img className='img-fluid'  src={Whoweare} alt='Photo by <a href="https://unsplash.com/@heylagostechie?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">heylagostechie</a> on <a href="https://unsplash.com/s/photos/human-business-work?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>' />
+                <Card
+                  src={Whoweare}
+                  alt='Photo by <a href="https://unsplash.com/@heylagostechie?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">heylagostechie</a> on <a href="https://unsplash.com/s/photos/human-business-work?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'
+                />
               </Zoom>
             </Grid>
           </Grid>
         </section>
-        <section style={{ height: "100%", marginTop: '8rem', marginBottom: '6rem' }} className="">
-          <Grid container spacing={isMobile ? 1 : 9} className="align-items-center h-100">
+        <section
+          style={{ height: "100%", marginTop: "8rem", marginBottom: "6rem" }}
+          className=""
+        >
+          <Grid
+            container
+            spacing={isMobile ? 1 : 9}
+            className="align-items-center h-100"
+          >
             <Grid item md={6}>
               <Fade left>
                 <Typography variant="h4" className="mb-2 text-capitalize">
@@ -98,7 +117,7 @@ const About = () => {
                       useStyles={useN01TextInfoContentStyles}
                       heading={"Diverse Team"}
                       body={
-                        "Embracing the rich culture the world as to offer, so as to have an amazing team."
+                        "We are an amazing team of diverse culture with a united course to deliver the best service everyday."
                       }
                     />
                   </div>
@@ -107,34 +126,19 @@ const About = () => {
                       useStyles={useN01TextInfoContentStyles}
                       heading={"Innovative"}
                       body={
-                        "Creating ways to make payment simple and easy for business to use for their day activities."
-                      }
-                    />
-                  </Box>
-                  <Box className="mb-3">
-                    <TextInfoContent
-                      useStyles={useN01TextInfoContentStyles}
-                      heading={"Entrepreneurship"}
-                      body={
-                        "A team to identify problems and providing solutions to help improve the community."
-                      }
-                    />
-                  </Box>
-                  <Box className="mb-3">
-                    <TextInfoContent
-                      useStyles={useN01TextInfoContentStyles}
-                      heading={"Respect"}
-                      body={
-                        "We communicate respectfully to one another to achieve a successful business."
+                        "As businesses and its environment evolve, we stand to provide innovations that would make transactions  easier and faster for all businesses."
                       }
                     />
                   </Box>
                 </div>
               </Fade>
             </Grid>
-            <Grid item sm={12} md={6}>
+            <Grid item sm={12} md={6} className='w-100'>
               <Zoom>
-                <img className='img-fluid' src={Passion} alt='Photo by <a href="https://unsplash.com/@goian?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ian Schneider</a> on <a href="https://unsplash.com/s/photos/values?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>' />
+                <Card
+                  src={Passion}
+                  alt='Photo by <a href="https://unsplash.com/@goian?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ian Schneider</a> on <a href="https://unsplash.com/s/photos/values?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'
+                />
               </Zoom>
             </Grid>
           </Grid>

@@ -1,13 +1,14 @@
-import { blackCircle, StoreLap as img } from "../../../Assets";
+import { StoreLap as img } from "../../../Assets";
 import { Grid, Typography } from "@material-ui/core";
 import { Fade, Zoom } from "react-reveal";
 import Badge from "../../../components/comingSoon";
 import { useMediaQueries } from "../../../HOC/useMediaQuery";
+import Card from '../../../components/card';
 
-const Ecommerce = ({ title, body, src, alt }) => {
+const Ecommerce = () => {
   const isMobile = useMediaQueries(0, 960);
   return (
-    <Grid container alignItems="center" spacing={2}>
+    <Grid container alignItems="center" spacing={isMobile ? 2 : 9}>
      
       <Grid item className="" md={6}>
         <Fade left>
@@ -20,18 +21,9 @@ const Ecommerce = ({ title, body, src, alt }) => {
           <Badge label="coming soon" />
         </Fade>
       </Grid>
-      <Grid item md={6} className="position-relative">
+      <Grid item md={6} className="w-100">
         <Zoom>
-          <img
-            className="img-fluid black-circle-reverse"
-            src={blackCircle}
-            alt="black circle"
-          />
-          <img
-            className="img-fluid "
-            src={img}
-            alt="Laptop showing eapay dashboard"
-          />
+          <Card src={img} />
         </Zoom>
       </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-import { Card, CardContent, makeStyles } from "@material-ui/core";
+import { Card, CardMedia, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,30 +9,38 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     maxWidth: 800,
     marginLeft: "auto",
-    overflow: "initial",
+    // overflow: "initial",
     background: "#ffffff",
     display: "flex",
+    height: '20rem',
     alignItems: "center",
     padding: `${theme.spacing(2)} 0`,
     "&:hover": {
       transform: "translateY(-3px)",
       boxShadow: "0 4px 20px 0 rgba(0,0,0,0.12)",
     },
+    [theme.breakpoints.down('md')]: {
+      height: '10rem',
+      marginTop: '2rem'
+    }
   },
   content: {
-    textAlign: "left",
-    paddingLeft: 0,
-    padding: theme.spacing(2),
+    borderRadius: '1rem',
+    height: '100%',
+    width: '100%'
   },
 }));
 
-const CardImg = () => {
+const CardImg = ({ src }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardContent className={classes.content}>
-        <img />
-      </CardContent>
+      <CardMedia
+      className={classes.content}
+      image={
+        src
+      }
+    />
     </Card>
   );
 };

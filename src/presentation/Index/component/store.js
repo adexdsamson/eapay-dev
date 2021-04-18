@@ -1,4 +1,4 @@
-import { Dot, blackCircle } from "../../../Assets";
+import { Dot } from "../../../Assets";
 import Badge from "../../../components/comingSoon";
 import { Fade, Zoom } from "react-reveal";
 import { useMediaQueries } from "../../../HOC/useMediaQuery";
